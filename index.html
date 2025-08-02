@@ -7,6 +7,13 @@
     <meta name="description" content="A modern React template with Vite and shadcn/ui" />
     <meta name="author" content="Your Name" />
     <meta property="og:image" content="/og-image.png" />
+    <script>
+      // Prevent flash of unstyled content
+      (function() {
+        const theme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.classList.add(theme);
+      })();
+    </script>
   </head>
 
   <body>
