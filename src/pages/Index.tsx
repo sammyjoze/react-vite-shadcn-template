@@ -33,7 +33,8 @@ import {
   Send,
   Trash2,
   Search,
-  Play
+  Play,
+  Settings
 } from 'lucide-react';
 import { STRIPE_PRODUCTS, stripePromise, PlanType } from '@/lib/stripe';
 
@@ -251,9 +252,9 @@ const Index: React.FC = () => {
             <div className="flex items-center space-x-2 sm:space-x-4">
               <ThemeToggle />
               {isAuthenticated ? (
-                <Button onClick={() => navigate('/dashboard')} size="sm" className="sm:size-default bg-yellow-500 hover:bg-yellow-400 text-black transition-all duration-200">
-                  <span className="hidden sm:inline">Go to Dashboard</span>
-                  <span className="sm:hidden">Dashboard</span>
+                <Button variant="outline" size="sm" className="sm:size-default hover:bg-yellow-500 hover:text-black transition-all duration-200 border-gray-700 text-white">
+                  <span className="hidden sm:inline">Account</span>
+                  <span className="sm:hidden">Account</span>
                 </Button>
               ) : (
                 <Button variant="outline" onClick={() => setIsAuthOpen(true)} size="sm" className="sm:size-default hover:bg-yellow-500 hover:text-black transition-all duration-200 border-gray-700 text-white">
@@ -771,6 +772,13 @@ const Index: React.FC = () => {
                 onClick={() => setIsPrivacyOpen(true)}
               >
                 Privacy
+              </Button>
+              <Button 
+                variant="link" 
+                className="p-0 h-auto font-normal hover:text-yellow-500 transition-colors duration-200 text-yellow-500 flex items-center"
+                onClick={() => navigate('/admin')}
+              >
+                <Shield className="h-4 w-4" />
               </Button>
               <span className="text-xs text-gray-400">
                 © {new Date().getFullYear()} YourApp. All rights reserved.
