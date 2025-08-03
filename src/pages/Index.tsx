@@ -4,6 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Switch } from '@/components/ui/switch';
 import AuthPopup from '@/components/AuthPopup';
 import SignUpPopup from '@/components/SignUpPopup';
 import TermsPopup from '@/components/TermsPopup';
@@ -34,9 +35,15 @@ import {
   Trash2,
   Search,
   Play,
-  Settings
+  Settings,
+  X,
+  Grid
 } from 'lucide-react';
 import { STRIPE_PRODUCTS, stripePromise, PlanType } from '@/lib/stripe';
+import { BackgroundBeams } from '@/components/ui/background-beams';
+import { WaitlistSection } from '@/components/ui/waitlist';
+import { TestimonialsSectionDemo } from '@/components/ui/testimonials-demo';
+import { PricingCard } from '@/components/ui/dark-gradient-pricing';
 
 const Index: React.FC = () => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -45,6 +52,7 @@ const Index: React.FC = () => {
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isLoading, setIsLoading] = useState<string | null>(null);
+  const [isYearly, setIsYearly] = useState(false);
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -126,20 +134,86 @@ const Index: React.FC = () => {
     setIsSignUpOpen(false);
   };
 
+  const handlePricingButtonClick = (tier: string) => {
+    if (tier === "Enterprise") {
+      setIsContactOpen(true);
+    } else {
+      setIsSignUpOpen(true);
+    }
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const pricingData = [
+    {
+      tier: "Free",
+      monthlyPrice: "$0",
+      yearlyPrice: "$0",
+      bestFor: "Best for 1-5 users",
+      monthlyCTA: "Get started free",
+      yearlyCTA: "Get started free",
+      benefits: [
+        { text: "One workspace", checked: true },
+        { text: "Email support", checked: true },
+        { text: "1 day data retention", checked: false },
+        { text: "Custom roles", checked: false },
+        { text: "Priority support", checked: false },
+        { text: "SSO", checked: false },
+      ]
+    },
+    {
+      tier: "Pro",
+      monthlyPrice: "$79",
+      yearlyPrice: "$790",
+      bestFor: "Best for 5-50 users",
+      monthlyCTA: "14-day free trial",
+      yearlyCTA: "14-day free trial",
+      benefits: [
+        { text: "Five workspaces", checked: true },
+        { text: "Email support", checked: true },
+        { text: "7 day data retention", checked: true },
+        { text: "Custom roles", checked: true },
+        { text: "Priority support", checked: false },
+        { text: "SSO", checked: false },
+      ]
+    },
+    {
+      tier: "Enterprise",
+      monthlyPrice: "Contact us",
+      yearlyPrice: "Contact us",
+      bestFor: "Best for 50+ users",
+      monthlyCTA: "Contact us",
+      yearlyCTA: "Contact us",
+      benefits: [
+        { text: "Unlimited workspaces", checked: true },
+        { text: "Email support", checked: true },
+        { text: "30 day data retention", checked: true },
+        { text: "Custom roles", checked: true },
+        { text: "Priority support", checked: true },
+        { text: "SSO", checked: true },
+      ]
+    }
+  ];
+
   const plans = [
     {
       name: 'Free',
       price: 0,
-      description: 'Perfect for getting started',
+      description: 'Best for 1-5 users',
       features: [
-        'Up to 3 projects',
-        'Basic analytics',
-        'Email support',
-        '1 team member',
-        '2GB storage',
-        'Community forum access'
+        { text: 'One workspace', included: true },
+        { text: 'Email support', included: true },
+        { text: '1 day data retention', included: false },
+        { text: 'Custom roles', included: false },
+        { text: 'Priority support', included: false },
+        { text: 'SSO', included: false }
       ],
-      buttonText: 'Get Started',
+      buttonText: 'Get started free',
       popular: false,
       icon: Star,
       gradient: 'from-gray-400 to-gray-600',
@@ -148,20 +222,16 @@ const Index: React.FC = () => {
     {
       name: 'Pro',
       price: STRIPE_PRODUCTS.PRO.price,
-      description: 'For growing teams and businesses',
+      description: 'Best for 5-50 users',
       features: [
-        'Unlimited projects',
-        'Advanced analytics',
-        'Priority support',
-        'Team collaboration',
-        'API access',
-        '50GB storage',
-        'Custom integrations',
-        'Advanced reporting',
-        'White-label options',
-        'Dedicated account manager'
+        { text: 'Five workspaces', included: true },
+        { text: 'Email support', included: true },
+        { text: '7 day data retention', included: true },
+        { text: 'Custom roles', included: true },
+        { text: 'Priority support', included: false },
+        { text: 'SSO', included: false }
       ],
-      buttonText: 'Subscribe to Pro',
+      buttonText: '14-day free trial',
       popular: true,
       icon: Zap,
       planType: 'PRO' as PlanType,
@@ -170,28 +240,22 @@ const Index: React.FC = () => {
     },
     {
       name: 'Enterprise',
-      price: STRIPE_PRODUCTS.ENTERPRISE.price,
-      description: 'For large organizations',
+      price: 'Contact us',
+      description: 'Best for 50+ users',
       features: [
-        'Everything in Pro',
-        'Custom integrations',
-        'Dedicated support',
-        'Advanced security',
-        'Custom branding',
-        'Unlimited storage',
-        'SLA guarantees',
-        'On-premise deployment',
-        'Custom training',
-        '24/7 phone support',
-        'Advanced compliance',
-        'Custom contracts'
+        { text: 'Unlimited workspaces', included: true },
+        { text: 'Email support', included: true },
+        { text: '30 day data retention', included: true },
+        { text: 'Custom roles', included: true },
+        { text: 'Priority support', included: true },
+        { text: 'SSO', included: true }
       ],
-      buttonText: 'Subscribe to Enterprise',
+      buttonText: 'Contact us',
       popular: false,
       icon: Crown,
       planType: 'ENTERPRISE' as PlanType,
       gradient: 'from-orange-500 to-red-600',
-      onClick: () => handleSubscribe('ENTERPRISE')
+      onClick: () => setIsContactOpen(true)
     }
   ];
 
@@ -235,12 +299,13 @@ const Index: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background relative">
+      <BackgroundBeams className="opacity-30" />
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-gray-800 bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-black/60">
+      <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-border/20 border-border/60">
         <div className="container mx-auto px-4 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity duration-200" onClick={() => navigate('/')}>
               <div className="relative">
                 <Globe className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-500" />
                 <Sparkles className="absolute -top-1 -right-1 h-3 w-3 text-yellow-500 animate-pulse" />
@@ -249,15 +314,49 @@ const Index: React.FC = () => {
                 YourApp
               </span>
             </div>
+            <div className="hidden md:flex items-center space-x-6">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => scrollToSection('how-it-works')}
+                className="hover:bg-yellow-500 hover:text-black transition-all duration-200"
+              >
+                How It Works
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => scrollToSection('features')}
+                className="hover:bg-yellow-500 hover:text-black transition-all duration-200"
+              >
+                Features
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => scrollToSection('demo')}
+                className="hover:bg-yellow-500 hover:text-black transition-all duration-200"
+              >
+                Demo
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => scrollToSection('pricing')}
+                className="hover:bg-yellow-500 hover:text-black transition-all duration-200"
+              >
+                Pricing
+              </Button>
+            </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
               <ThemeToggle />
               {isAuthenticated ? (
-                <Button variant="outline" size="sm" className="sm:size-default hover:bg-yellow-500 hover:text-black transition-all duration-200 border-gray-700 text-white">
+                <Button variant="outline" size="sm" className="sm:size-default hover:bg-yellow-500 hover:text-black transition-all duration-200">
                   <span className="hidden sm:inline">Account</span>
                   <span className="sm:hidden">Account</span>
                 </Button>
               ) : (
-                <Button variant="outline" onClick={() => setIsAuthOpen(true)} size="sm" className="sm:size-default hover:bg-yellow-500 hover:text-black transition-all duration-200 border-gray-700 text-white">
+                <Button variant="outline" onClick={() => setIsAuthOpen(true)} size="sm" className="sm:size-default hover:bg-yellow-500 hover:text-black transition-all duration-200">
                   Sign In
                 </Button>
               )}
@@ -274,11 +373,11 @@ const Index: React.FC = () => {
             <Sparkles className="h-3 w-3 mr-1" />
             ✨ Now Available
           </Badge>
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 animate-fade-in text-white">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 animate-fade-in text-foreground">
             Transform Your Workflow
             <span className="bg-gradient-to-r from-yellow-500 to-yellow-400 bg-clip-text text-transparent"> Today</span>
           </h1>
-          <p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-4 animate-fade-in">
+          <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto px-4 animate-fade-in">
             Streamline your processes, boost productivity, and achieve more with our powerful platform designed for modern teams.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 animate-fade-in">
@@ -289,7 +388,7 @@ const Index: React.FC = () => {
             <Button
               size="lg"
               variant="outline"
-              className="h-12 sm:h-10 hover:bg-yellow-500 hover:text-black transition-all duration-200 border-gray-700 text-white"
+              className="h-12 sm:h-10 hover:bg-yellow-500 hover:text-black transition-all duration-200"
             >
               <Rocket className="mr-2 h-4 w-4" />
               Watch Demo
@@ -299,12 +398,12 @@ const Index: React.FC = () => {
       </section>
 
       {/* Process Section */}
-      <section className="container mx-auto px-4 py-12 sm:py-20 overflow-hidden">
+      <section id="how-it-works" className="container mx-auto px-4 py-12 sm:py-20 overflow-hidden">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-white">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground">
             How It Works
           </h2>
-          <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto px-4">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
             Create your perfect logo in just three simple steps
           </p>
         </div>
@@ -320,8 +419,8 @@ const Index: React.FC = () => {
                 1
               </div>
             </div>
-            <h3 className="text-xl font-bold mb-3 text-white">Describe your logo</h3>
-            <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+            <h3 className="text-xl font-bold mb-3 text-foreground">Describe your logo</h3>
+            <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
               Tell us about your brand and specify your design preferences all in one step.
             </p>
           </div>
@@ -336,8 +435,8 @@ const Index: React.FC = () => {
                 2
               </div>
             </div>
-            <h3 className="text-xl font-bold mb-3 text-white">AI generates options</h3>
-            <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+            <h3 className="text-xl font-bold mb-3 text-foreground">AI generates options</h3>
+            <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
               Our AI creates a professional logo based on your description and specifications.
             </p>
           </div>
@@ -352,8 +451,8 @@ const Index: React.FC = () => {
                 3
               </div>
             </div>
-            <h3 className="text-xl font-bold mb-3 text-white">Download and use</h3>
-            <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+            <h3 className="text-xl font-bold mb-3 text-foreground">Download and use</h3>
+            <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
               Get your logo in SVG format, ready to use on your website, social media, and more.
             </p>
           </div>
@@ -361,158 +460,105 @@ const Index: React.FC = () => {
       </section>
 
       {/* Demo Section */}
-      <section className="container mx-auto px-4 py-12 sm:py-20">
+      <section id="demo" className="container mx-auto px-4 py-12 sm:py-20">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-white">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground">
             See It In Action
           </h2>
-          <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto px-4">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
             Watch how easy it is to create your perfect logo
           </p>
         </div>
 
-        <div className="relative max-w-4xl mx-auto">
-          {/* Email Client Mockup */}
+        <div className="relative max-w-6xl mx-auto">
+          {/* Dashboard Container */}
           <div className="bg-gray-900 rounded-lg shadow-2xl overflow-hidden border border-gray-700">
-            {/* Email Client Header */}
-            <div className="bg-gray-800 px-4 py-3 border-b border-gray-700">
+            {/* Dashboard Header */}
+            <div className="bg-gray-800 px-6 py-4 border-b border-gray-700">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                </div>
-                <div className="text-gray-300 text-xs">Email Client</div>
-                <div className="w-16"></div>
-              </div>
-            </div>
-
-            {/* Email Client Content */}
-            <div className="flex">
-              {/* Left Sidebar */}
-              <div className="w-48 bg-gray-800 border-r border-gray-700">
-                <div className="p-3">
-                  <div className="space-y-1">
-                    <div className="flex items-center space-x-2 text-gray-300 hover:bg-gray-700 px-2 py-1 rounded cursor-pointer">
-                      <Inbox className="h-3 w-3" />
-                      <span className="text-xs">Inbox</span>
-                      <span className="ml-auto text-xs bg-yellow-500 text-black px-1 py-0.5 rounded">12</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-400 hover:bg-gray-700 px-2 py-1 rounded cursor-pointer">
-                      <FileText className="h-3 w-3" />
-                      <span className="text-xs">Drafts</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-400 hover:bg-gray-700 px-2 py-1 rounded cursor-pointer">
-                      <Send className="h-3 w-3" />
-                      <span className="text-xs">Sent</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-400 hover:bg-gray-700 px-2 py-1 rounded cursor-pointer">
-                      <Trash2 className="h-3 w-3" />
-                      <span className="text-xs">Trash</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Middle Pane - Email List */}
-              <div className="flex-1 bg-gray-900">
-                <div className="p-3 border-b border-gray-700">
-                  <div className="relative">
-                    <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-gray-400" />
-                    <input 
-                      type="text" 
-                      placeholder="Q Search" 
-                      className="w-full pl-7 pr-3 py-1.5 bg-gray-800 border border-gray-700 rounded text-white text-xs focus:outline-none focus:border-yellow-500"
-                    />
-                  </div>
-                </div>
-                <div className="p-3 space-y-2">
-                  <div className="flex items-center space-x-2 p-2 hover:bg-gray-800 rounded cursor-pointer">
-                    <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
-                      <span className="text-black font-semibold text-xs">WS</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-1">
-                        <span className="text-white font-medium text-xs">William Smith</span>
-                        <span className="text-xs bg-blue-500 text-white px-1 py-0.5 rounded">meeting</span>
-                      </div>
-                      <p className="text-gray-300 text-xs">Project update meeting tomorrow</p>
-                    </div>
-                    <span className="text-gray-400 text-xs">2h</span>
-                  </div>
-                  <div className="flex items-center space-x-2 p-2 hover:bg-gray-800 rounded cursor-pointer">
-                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                      <span className="text-black font-semibold text-xs">AS</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-1">
-                        <span className="text-white font-medium text-xs">Alice Smith</span>
-                        <span className="text-xs bg-red-500 text-white px-1 py-0.5 rounded">important</span>
-                      </div>
-                      <p className="text-gray-300 text-xs">Budget approval needed</p>
-                    </div>
-                    <span className="text-gray-400 text-xs">1d</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Pane - Open Email */}
-              <div className="w-72 bg-gray-900 border-l border-gray-700">
-                <div className="p-3 border-b border-gray-700">
+                <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
-                      <span className="text-black font-semibold text-xs">WS</span>
+                    <div className="w-6 h-6 bg-blue-500 rounded"></div>
+                    <span className="text-white font-semibold">supastarter</span>
+                  </div>
+                  <div className="flex items-center space-x-6">
+                    <div className="flex items-center space-x-2 text-blue-400 border-b-2 border-blue-400 pb-2">
+                      <Grid className="h-4 w-4" />
+                      <span className="text-sm font-medium">Dashboard</span>
                     </div>
-                    <div>
-                      <div className="text-white font-medium text-xs">William Smith</div>
-                      <div className="text-gray-400 text-xs">william.smith@company.com</div>
+                    <div className="flex items-center space-x-2 text-gray-400 hover:text-gray-300 cursor-pointer">
+                      <Sparkles className="h-4 w-4" />
+                      <span className="text-sm">AI Demo</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-400 hover:text-gray-300 cursor-pointer">
+                      <Settings className="h-4 w-4" />
+                      <span className="text-sm">Settings</span>
                     </div>
                   </div>
                 </div>
-                <div className="p-3">
-                  <div className="text-gray-300 text-xs leading-relaxed">
-                    Hi team,<br/><br/>
-                    I wanted to schedule our project update meeting for tomorrow at 2 PM. Please let me know if this works for everyone.<br/><br/>
-                    Best regards,<br/>
-                    William
+                <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
+              </div>
+            </div>
+
+            {/* Dashboard Content */}
+            <div className="p-6">
+              {/* Welcome Message */}
+              <div className="mb-6">
+                <h3 className="text-xl font-bold text-white mb-1">Welcome Jonathan Wilke!</h3>
+                <p className="text-gray-400 text-sm">See the latest stats of your awesome business.</p>
+              </div>
+
+              {/* Key Metrics */}
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="bg-gray-800 rounded-lg p-4">
+                  <div className="text-gray-400 text-sm mb-1">New clients</div>
+                  <div className="text-white text-2xl font-bold">344</div>
+                  <div className="text-green-400 text-sm">+12%</div>
+                </div>
+                <div className="bg-gray-800 rounded-lg p-4">
+                  <div className="text-gray-400 text-sm mb-1">Revenue</div>
+                  <div className="text-white text-2xl font-bold">$5,243.00</div>
+                  <div className="text-green-400 text-sm">+60%</div>
+                </div>
+                <div className="bg-gray-800 rounded-lg p-4">
+                  <div className="text-gray-400 text-sm mb-1">Churn</div>
+                  <div className="text-white text-2xl font-bold">3%</div>
+                  <div className="text-red-400 text-sm">-30%</div>
+                </div>
+              </div>
+
+              {/* Video Area */}
+              <div className="bg-gray-800 rounded-lg p-8 flex items-center justify-center min-h-[300px]">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Play className="h-8 w-8 text-gray-400" />
                   </div>
-                  <div className="mt-4 space-y-2">
-                    <input 
-                      type="text" 
-                      placeholder="Reply William Smith..." 
-                      className="w-full px-2 py-1.5 bg-gray-800 border border-gray-700 rounded text-white text-xs focus:outline-none focus:border-yellow-500"
-                    />
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-1">
-                        <input type="checkbox" id="mute" className="rounded" />
-                        <label htmlFor="mute" className="text-gray-300 text-xs">Mute this thread</label>
-                      </div>
-                      <Button className="bg-yellow-500 hover:bg-yellow-400 text-black text-xs px-3 py-1 h-6">
-                        Send
-                      </Button>
-                    </div>
-                  </div>
+                  <p className="text-gray-400 text-lg">Place your content here...</p>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Play Button Overlay */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-200 cursor-pointer">
-              <Play className="h-6 w-6 text-black ml-0.5" />
+            {/* Footer */}
+            <div className="bg-gray-800 px-6 py-3 border-t border-gray-700">
+              <div className="flex items-center justify-between text-xs text-gray-400">
+                <span>© 2024 supastarter. All rights reserved.</span>
+                <div className="flex items-center space-x-4">
+                  <span className="hover:text-gray-300 cursor-pointer">Privacy policy</span>
+                  <span className="hover:text-gray-300 cursor-pointer">Terms and conditions</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="container mx-auto px-4 py-12 sm:py-20">
+      <section id="features" className="container mx-auto px-4 py-12 sm:py-20">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-white">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground">
             Why Choose Our Platform?
           </h2>
-          <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto px-4">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
             Built with modern technology and designed for the best user experience
           </p>
         </div>
@@ -521,18 +567,18 @@ const Index: React.FC = () => {
           {features.map((feature, index) => (
             <Card
               key={feature.title}
-              className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-gray-900/50 backdrop-blur-sm"
+              className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-card/50 backdrop-blur-sm dark:border-border/20 border-border/40"
             >
               <CardHeader>
                 <div className="flex items-center space-x-2">
                   <div className={`p-2 rounded-lg bg-gradient-to-r ${feature.gradient} group-hover:scale-110 transition-transform duration-200`}>
                     <feature.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                   </div>
-                  <CardTitle className="text-base sm:text-lg text-white">{feature.title}</CardTitle>
+                  <CardTitle className="text-base sm:text-lg text-foreground">{feature.title}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-sm sm:text-base text-gray-300">
+                <CardDescription className="text-sm sm:text-base text-muted-foreground">
                   {feature.description}
                 </CardDescription>
               </CardContent>
@@ -541,187 +587,70 @@ const Index: React.FC = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="container mx-auto px-4 py-12 sm:py-20">
-        <div className="text-center mb-12 sm:mb-16">
-          <Badge variant="secondary" className="mb-4 bg-yellow-500 text-black border-0">
-            💰 Pricing
-          </Badge>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-white">
-            Simple, Transparent Pricing
-          </h2>
-          <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto px-4">
-            Choose the plan that's right for you. All plans include a 14-day free trial.
-          </p>
-        </div>
+      {/* Testimonials Section */}
+      <TestimonialsSectionDemo />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
-          {plans.map((plan) => (
-            <Card 
-              key={plan.name} 
-              className={`relative group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 ${
-                plan.popular 
-                  ? 'border-yellow-500 shadow-lg scale-105 bg-gradient-to-br from-yellow-500/5 to-yellow-500/10 ring-2 ring-yellow-500/20' 
-                  : 'border-0 bg-gray-900/50 backdrop-blur-sm'
-              }`}
-            >
-              {plan.popular && (
-                <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-500 text-black border-0">
-                  ⭐ Most Popular
+      {/* Pricing Section */}
+      <section id="pricing" className="relative overflow-hidden bg-background text-foreground">
+        <div className="relative z-10 mx-auto max-w-5xl px-4 py-20 md:px-8">
+          <div className="mb-12 space-y-3">
+            <h2 className="text-center text-3xl font-semibold leading-tight sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
+              Pricing
+            </h2>
+            <p className="text-center text-base text-muted-foreground md:text-lg">
+              Use it for free for yourself, upgrade when your team needs advanced
+              control.
+            </p>
+            
+            {/* Billing Toggle */}
+            <div className="flex items-center justify-center space-x-4 mt-8">
+              <span className={`text-sm font-medium ${!isYearly ? 'text-foreground' : 'text-muted-foreground'}`}>
+                Monthly
+              </span>
+              <Switch
+                checked={isYearly}
+                onCheckedChange={setIsYearly}
+                className="data-[state=checked]:bg-yellow-500 data-[state=unchecked]:bg-gray-300"
+              />
+              <span className={`text-sm font-medium ${isYearly ? 'text-foreground' : 'text-muted-foreground'}`}>
+                Yearly
+              </span>
+              {isYearly && (
+                <Badge variant="secondary" className="bg-green-500 text-white border-0">
+                  Save 17%
                 </Badge>
               )}
-              
-              <CardHeader className="text-center pb-6">
-                <div className="flex justify-center mb-4">
-                  <div className={`p-4 rounded-full bg-gradient-to-r ${plan.gradient} group-hover:scale-110 transition-transform duration-200 shadow-lg`}>
-                    <plan.icon className="h-8 w-8 text-white" />
-                  </div>
-                </div>
-                <CardTitle className="text-xl sm:text-2xl mb-2 text-white">{plan.name}</CardTitle>
-                <CardDescription className="text-sm sm:text-base mb-4 text-gray-300">
-                  {plan.description}
-                </CardDescription>
-                <div className="mb-4">
-                  <div className="flex items-baseline justify-center">
-                    <span className="text-4xl sm:text-5xl font-bold text-white">
-                      ${plan.price}
-                    </span>
-                    <span className="text-gray-300 ml-2">/month</span>
-                  </div>
-                  {plan.price === 0 && (
-                    <p className="text-sm text-gray-300 mt-1">Forever free</p>
-                  )}
-                </div>
-              </CardHeader>
-
-              <CardContent className="space-y-6">
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-sm text-gray-400 uppercase tracking-wide">
-                    What's included:
-                  </h4>
-                  <ul className="space-y-3">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-start space-x-3">
-                        <div className="flex-shrink-0 mt-0.5">
-                          <Check className="h-4 w-4 text-green-500" />
-                        </div>
-                        <span className="text-sm sm:text-base text-gray-300 leading-relaxed">
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="pt-4">
-                  <Button
-                    className="w-full h-11 sm:h-10 transition-all duration-200 font-medium"
-                    variant={plan.popular ? 'default' : 'outline'}
-                    onClick={plan.onClick}
-                    disabled={isLoading === plan.planType}
-                  >
-                    {isLoading === plan.planType ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Processing...
-                      </>
-                    ) : (
-                      plan.buttonText
-                    )}
-                  </Button>
-                </div>
-
-                {plan.price > 0 && (
-                  <div className="text-center">
-                    <p className="text-xs text-gray-400">
-                      ✓ 14-day free trial
-                    </p>
-                    <p className="text-xs text-gray-400">
-                      ✓ Cancel anytime
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Additional Pricing Info */}
-        <div className="mt-16 sm:mt-20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center p-6 rounded-lg bg-gray-900/50 backdrop-blur-sm">
-              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Check className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="font-semibold mb-2 text-white">No Setup Fees</h3>
-              <p className="text-sm text-gray-300">
-                Get started immediately with no hidden costs or setup fees
-              </p>
-            </div>
-            <div className="text-center p-6 rounded-lg bg-gray-900/50 backdrop-blur-sm">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="font-semibold mb-2 text-white">Secure & Reliable</h3>
-              <p className="text-sm text-gray-300">
-                Enterprise-grade security with 99.9% uptime guarantee
-              </p>
-            </div>
-            <div className="text-center p-6 rounded-lg bg-gray-900/50 backdrop-blur-sm">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="font-semibold mb-2 text-white">24/7 Support</h3>
-              <p className="text-sm text-gray-300">
-                Get help whenever you need it with our dedicated support team
-              </p>
             </div>
           </div>
-        </div>
-
-        {/* FAQ Section */}
-        <div className="mt-16 sm:mt-20 text-center">
-          <h3 className="text-xl sm:text-2xl font-bold mb-8 text-white">
-            Frequently Asked Questions
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="text-left p-6 rounded-lg bg-gray-900/50 backdrop-blur-sm hover:shadow-lg transition-all duration-200">
-              <h4 className="font-semibold mb-2 text-white">Can I cancel anytime?</h4>
-              <p className="text-gray-300 text-sm sm:text-base">
-                Yes, you can cancel your subscription at any time. You'll continue to have access until the end of your billing period.
-              </p>
-            </div>
-            <div className="text-left p-6 rounded-lg bg-gray-900/50 backdrop-blur-sm hover:shadow-lg transition-all duration-200">
-              <h4 className="font-semibold mb-2 text-white">Is there a free trial?</h4>
-              <p className="text-gray-300 text-sm sm:text-base">
-                Yes, all paid plans include a 14-day free trial. No credit card required to start.
-              </p>
-            </div>
-            <div className="text-left p-6 rounded-lg bg-gray-900/50 backdrop-blur-sm hover:shadow-lg transition-all duration-200">
-              <h4 className="font-semibold mb-2 text-white">What payment methods do you accept?</h4>
-              <p className="text-gray-300 text-sm sm:text-base">
-                We accept all major credit cards, debit cards, and digital wallets through Stripe.
-              </p>
-            </div>
-            <div className="text-left p-6 rounded-lg bg-gray-900/50 backdrop-blur-sm hover:shadow-lg transition-all duration-200">
-              <h4 className="font-semibold mb-2 text-white">Do you offer refunds?</h4>
-              <p className="text-gray-300 text-sm sm:text-base">
-                We offer a 30-day money-back guarantee. If you're not satisfied, we'll refund your payment.
-              </p>
-            </div>
+          
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {pricingData.map((plan) => (
+              <PricingCard
+                key={plan.tier}
+                tier={plan.tier}
+                price={isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                bestFor={plan.bestFor}
+                CTA={isYearly ? plan.yearlyCTA : plan.monthlyCTA}
+                benefits={plan.benefits}
+                onButtonClick={handlePricingButtonClick}
+                isYearly={isYearly}
+              />
+            ))}
           </div>
         </div>
       </section>
+
+
 
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-12 sm:py-20">
         <div className="bg-gradient-to-r from-yellow-500/10 via-yellow-500/5 to-yellow-500/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/5 via-transparent to-yellow-500/5 rounded-full blur-3xl"></div>
           <div className="relative">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-white">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground">
               Ready to Get Started?
             </h2>
-            <p className="text-base sm:text-lg text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
+            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
               Join thousands of users who have already transformed their workflow with our platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -739,7 +668,7 @@ const Index: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-800 bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-black/60">
+      <footer className="border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-border/20 border-border/60">
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
             <div className="flex items-center space-x-2">
@@ -751,24 +680,24 @@ const Index: React.FC = () => {
                 YourApp
               </span>
             </div>
-            <div className="flex items-center space-x-6 text-sm text-gray-300">
+            <div className="flex items-center space-x-6 text-sm text-muted-foreground">
               <Button 
                 variant="link" 
-                className="p-0 h-auto font-normal hover:text-yellow-500 transition-colors duration-200 text-gray-300"
+                className="p-0 h-auto font-normal hover:text-yellow-500 transition-colors duration-200 text-muted-foreground"
                 onClick={() => setIsContactOpen(true)}
               >
                 Contact
               </Button>
               <Button 
                 variant="link" 
-                className="p-0 h-auto font-normal hover:text-yellow-500 transition-colors duration-200 text-gray-300"
+                className="p-0 h-auto font-normal hover:text-yellow-500 transition-colors duration-200 text-muted-foreground"
                 onClick={() => setIsTermsOpen(true)}
               >
                 Terms
               </Button>
               <Button 
                 variant="link" 
-                className="p-0 h-auto font-normal hover:text-yellow-500 transition-colors duration-200 text-gray-300"
+                className="p-0 h-auto font-normal hover:text-yellow-500 transition-colors duration-200 text-muted-foreground"
                 onClick={() => setIsPrivacyOpen(true)}
               >
                 Privacy
@@ -780,13 +709,15 @@ const Index: React.FC = () => {
               >
                 <Shield className="h-4 w-4" />
               </Button>
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-muted-foreground">
                 © {new Date().getFullYear()} YourApp. All rights reserved.
               </span>
             </div>
           </div>
         </div>
       </footer>
+
+
 
       {/* Popups */}
       <AuthPopup 

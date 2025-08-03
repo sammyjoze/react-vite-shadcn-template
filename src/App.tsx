@@ -7,10 +7,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import AdminMenu from "@/components/AdminMenu";
+import { StagewiseToolbar } from "@stagewise/toolbar-react";
+import ReactPlugin from "@stagewise-plugins/react";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 // import Pricing from "./pages/Pricing"; // Removed
+import PricingNew from "./pages/PricingNew";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -36,11 +39,16 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/admin" element={<Admin />} />
-                {/* <Route path="/pricing" element={<Pricing />} /> */}
+                <Route path="/pricing" element={<PricingNew />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
+            <StagewiseToolbar
+              config={{
+                plugins: [ReactPlugin],
+              }}
+            />
           </TooltipProvider>
         </AuthProvider>
       </ThemeProvider>

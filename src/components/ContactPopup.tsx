@@ -63,16 +63,16 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onClose }) => {
             <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
               <CheckCircle2 className="h-10 w-10 text-white" />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2">Message Sent!</h3>
-            <p className="text-gray-300 mb-4">
+            <h3 className="text-2xl font-bold text-foreground mb-2">Message Sent!</h3>
+            <p className="text-muted-foreground mb-4">
               Thank you for reaching out. We'll get back to you within 24 hours.
             </p>
-            <div className="bg-gray-800/50 rounded-lg p-4 mb-4">
-              <div className="flex items-center justify-center text-sm text-gray-400 mb-2">
+            <div className="bg-muted/50 rounded-lg p-4 mb-4">
+              <div className="flex items-center justify-center text-sm text-muted-foreground mb-2">
                 <Clock className="h-4 w-4 mr-2" />
                 Response time: Usually within 2-4 hours
               </div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted-foreground/70">
                 We care about every message and always respond with personalized solutions.
               </p>
             </div>
@@ -91,10 +91,10 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onClose }) => {
               <MessageSquare className="h-8 w-8 text-black" />
             </div>
           </div>
-          <DialogTitle className="text-2xl sm:text-3xl font-bold text-white">
+          <DialogTitle className="text-2xl sm:text-3xl font-bold text-white text-center">
             Let's Start a Conversation
           </DialogTitle>
-          <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto text-center">
             Have a question, feedback, or just want to say hello? We'd love to hear from you!
           </p>
         </DialogHeader>
@@ -102,7 +102,7 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onClose }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Contact Form */}
           <div className="space-y-6">
-            <Card className="bg-gray-900/50 border-gray-700">
+            <Card className="bg-card/50 border-border/40 dark:border-border/20">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Send className="h-5 w-5 mr-2 text-yellow-500" />
@@ -122,7 +122,7 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onClose }) => {
                       placeholder="Your full name"
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
-                      className="h-12 border-2 border-gray-700 bg-gray-800 text-white placeholder:text-gray-400 focus:border-yellow-500"
+                      className="h-12 border-2 border-gray-600 bg-gray-800 text-white placeholder:text-gray-400 focus:border-yellow-500"
                       required
                     />
                   </div>
@@ -135,7 +135,7 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onClose }) => {
                       placeholder="your.email@example.com"
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="h-12 border-2 border-gray-700 bg-gray-800 text-white placeholder:text-gray-400 focus:border-yellow-500"
+                      className="h-12 border-2 border-gray-600 bg-gray-800 text-white placeholder:text-gray-400 focus:border-yellow-500"
                       required
                     />
                   </div>
@@ -147,7 +147,7 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onClose }) => {
                       placeholder="Tell us what's on your mind..."
                       value={formData.message}
                       onChange={(e) => handleInputChange('message', e.target.value)}
-                      className="min-h-[120px] border-2 border-gray-700 bg-gray-800 text-white placeholder:text-gray-400 focus:border-yellow-500 resize-none"
+                      className="min-h-[120px] border-2 border-gray-600 bg-gray-800 text-white placeholder:text-gray-400 focus:border-yellow-500 resize-none"
                       required
                     />
                   </div>
@@ -176,7 +176,7 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onClose }) => {
 
           {/* Why Choose Us */}
           <div className="space-y-6">
-            <Card className="bg-gray-900/50 border-gray-700">
+            <Card className="bg-card/50 border-border/40 dark:border-border/20">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Heart className="h-5 w-5 mr-2 text-yellow-500" />
@@ -193,7 +193,7 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onClose }) => {
                   </div>
                   <div>
                     <h4 className="text-white font-medium">Lightning Fast Response</h4>
-                    <p className="text-gray-400 text-sm">We typically respond within 2-4 hours during business hours.</p>
+                    <p className="text-gray-300 text-sm">We typically respond within 2-4 hours during business hours.</p>
                   </div>
                 </div>
                 
@@ -203,7 +203,7 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onClose }) => {
                   </div>
                   <div>
                     <h4 className="text-white font-medium">Expert Team</h4>
-                    <p className="text-gray-400 text-sm">Our experienced team is here to help with any questions or concerns.</p>
+                    <p className="text-gray-300 text-sm">Our experienced team is here to help with any questions or concerns.</p>
                   </div>
                 </div>
                 
@@ -213,7 +213,7 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isOpen, onClose }) => {
                   </div>
                   <div>
                     <h4 className="text-white font-medium">Secure & Private</h4>
-                    <p className="text-gray-400 text-sm">Your information is protected with enterprise-grade security.</p>
+                    <p className="text-gray-300 text-sm">Your information is protected with enterprise-grade security.</p>
                   </div>
                 </div>
               </CardContent>

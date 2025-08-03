@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Check, Crown, Star, Zap } from 'lucide-react';
 import { STRIPE_PRODUCTS, stripePromise, PlanType } from '@/lib/stripe';
 import { supabase } from '@/lib/supabase';
+import { PricingCard } from '@/components/ui/dark-gradient-pricing';
 
 const Pricing: React.FC = () => {
   const [isLoading, setIsLoading] = useState<string | null>(null);
@@ -102,6 +103,68 @@ const Pricing: React.FC = () => {
     }
   ];
 
+  function PricingDemo() {
+    return (
+      <section className="relative overflow-hidden bg-background text-foreground">
+        <div className="relative z-10 mx-auto max-w-5xl px-4 py-20 md:px-8">
+          <div className="mb-12 space-y-3">
+            <h2 className="text-center text-3xl font-semibold leading-tight sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
+              Pricing
+            </h2>
+            <p className="text-center text-base text-muted-foreground md:text-lg">
+              Use it for free for yourself, upgrade when your team needs advanced
+              control.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <PricingCard
+              tier="Free"
+              price="$0/mo"
+              bestFor="Best for 1-5 users"
+              CTA="Get started free"
+              benefits={[
+                { text: "One workspace", checked: true },
+                { text: "Email support", checked: true },
+                { text: "1 day data retention", checked: false },
+                { text: "Custom roles", checked: false },
+                { text: "Priority support", checked: false },
+                { text: "SSO", checked: false },
+              ]}
+            />
+            <PricingCard
+              tier="Pro"
+              price="$79/mo"
+              bestFor="Best for 5-50 users"
+              CTA="14-day free trial"
+              benefits={[
+                { text: "Five workspaces", checked: true },
+                { text: "Email support", checked: true },
+                { text: "7 day data retention", checked: true },
+                { text: "Custom roles", checked: true },
+                { text: "Priority support", checked: false },
+                { text: "SSO", checked: false },
+              ]}
+            />
+            <PricingCard
+              tier="Enterprise"
+              price="Contact us"
+              bestFor="Best for 50+ users"
+              CTA="Contact us"
+              benefits={[
+                { text: "Unlimited workspaces", checked: true },
+                { text: "Email support", checked: true },
+                { text: "30 day data retention", checked: true },
+                { text: "Custom roles", checked: true },
+                { text: "Priority support", checked: true },
+                { text: "SSO", checked: true },
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
       <div className="container mx-auto px-4 py-12 sm:py-20">
@@ -120,7 +183,7 @@ const Pricing: React.FC = () => {
           {plans.map((plan) => (
             <Card 
               key={plan.name} 
-              className={`relative ${plan.popular ? 'border-primary shadow-lg scale-105' : ''}`}
+              className={`relative h-full ${plan.popular ? 'border-primary shadow-lg' : ''}`}
             >
               {plan.popular && (
                 <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -136,15 +199,33 @@ const Pricing: React.FC = () => {
                 <CardDescription className="text-sm sm:text-base">
                   {plan.description}
                 </CardDescription>
-                <div className="mt-4">
-                  <span className="text-3xl sm:text-4xl font-bold">
-                    ${plan.price}
-                  </span>
-                  <span className="text-muted-foreground">/month</span>
-                </div>
+                                 <div className="mt-4">
+                   {plan.name === 'Enterprise' ? (
+                     <div>
+                       <span className="text-3xl sm:text-4xl font-bold">
+                         Contact us
+                       </span>
+                       <div className="text-sm text-muted-foreground mt-1">
+                         Forever free
+                       </div>
+                     </div>
+                   ) : (
+                     <>
+                       <span className="text-3xl sm:text-4xl font-bold">
+                         ${plan.price}
+                       </span>
+                       <span className="text-muted-foreground">/month</span>
+                       {plan.name === 'Free' && (
+                         <div className="text-sm text-muted-foreground mt-1">
+                           Forever free
+                         </div>
+                       )}
+                     </>
+                   )}
+                 </div>
               </CardHeader>
 
-              <CardContent className="space-y-4">
+              <CardContent className="pb-20">
                 <ul className="space-y-3">
                   {plan.features.map((feature, index) => (
                     <li key={index} className="flex items-center space-x-3">
@@ -153,27 +234,32 @@ const Pricing: React.FC = () => {
                     </li>
                   ))}
                 </ul>
+              </CardContent>
 
-                <Button
-                  className="w-full h-11 sm:h-10"
-                  variant={plan.popular ? 'default' : 'outline'}
-                  onClick={() => {
-                    if (plan.planType) {
-                      handleSubscribe(plan.planType);
-                    } else {
-                      // Free plan - redirect to signup
-                      navigate('/');
-                    }
-                  }}
-                  disabled={isLoading === plan.planType}
-                >
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                                 <Button
+                   className={`w-full h-11 sm:h-10 ${plan.name === 'Enterprise' ? 'mt-4' : ''} ${
+                     plan.popular 
+                       ? 'bg-primary hover:bg-primary/90 text-primary-foreground' 
+                       : 'bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border'
+                   }`}
+                   onClick={() => {
+                     if (plan.planType) {
+                       handleSubscribe(plan.planType);
+                     } else {
+                       // Free plan - redirect to signup
+                       navigate('/');
+                     }
+                   }}
+                   disabled={isLoading === plan.planType}
+                 >
                   {isLoading === plan.planType ? (
                     'Processing...'
                   ) : (
                     plan.buttonText
                   )}
                 </Button>
-              </CardContent>
+              </div>
             </Card>
           ))}
         </div>
@@ -209,10 +295,13 @@ const Pricing: React.FC = () => {
               </p>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+                 </div>
+       </div>
+       
+       {/* New Brand-Aligned Pricing Demo */}
+       <PricingDemo />
+     </div>
+   );
+ };
 
 export default Pricing; 

@@ -28,14 +28,14 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
           </div>
         </DialogHeader>
         
-        <Card className="border-0 shadow-none bg-gradient-to-br from-card to-card/50 backdrop-blur-sm">
+        <Card className="border-0 shadow-none bg-gradient-to-br from-card to-card/50 backdrop-blur-sm border border-border/40 dark:border-border/20">
           <CardContent className="p-0">
             <ScrollArea className="h-[70vh] px-4 sm:px-6">
               <div className="space-y-8 text-sm sm:text-base py-4">
                 <section className="space-y-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"></div>
-                    <h3 className="font-semibold text-lg">1. Information We Collect</h3>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <h3 className="font-semibold text-lg text-foreground">1. Information We Collect</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
                     We collect information you provide directly to us, such as when you create an account, make a purchase, or contact us for support.
@@ -51,7 +51,7 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
                       'Usage data and preferences'
                     ].map((item, index) => (
                       <li key={index} className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
                         <span className="text-muted-foreground">{item}</span>
                       </li>
                     ))}
@@ -60,8 +60,8 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
 
                 <section className="space-y-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></div>
-                    <h3 className="font-semibold text-lg">2. How We Use Your Information</h3>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <h3 className="font-semibold text-lg text-foreground">2. How We Use Your Information</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
                     We use the information we collect to:
@@ -75,7 +75,7 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
                       'Communicate with you about products, services, and events'
                     ].map((item, index) => (
                       <li key={index} className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
                         <span className="text-muted-foreground">{item}</span>
                       </li>
                     ))}
@@ -84,8 +84,8 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
 
                 <section className="space-y-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
-                    <h3 className="font-semibold text-lg">3. Information Sharing</h3>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <h3 className="font-semibold text-lg text-foreground">3. Information Sharing</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
                     We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy.
@@ -100,7 +100,7 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
                       'Legal authorities when required by law'
                     ].map((item, index) => (
                       <li key={index} className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
                         <span className="text-muted-foreground">{item}</span>
                       </li>
                     ))}
@@ -109,8 +109,8 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
 
                 <section className="space-y-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full"></div>
-                    <h3 className="font-semibold text-lg">4. Data Security</h3>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <h3 className="font-semibold text-lg text-foreground">4. Data Security</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
                     We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.
@@ -122,8 +122,8 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
 
                 <section className="space-y-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full"></div>
-                    <h3 className="font-semibold text-lg">5. Cookies and Tracking</h3>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <h3 className="font-semibold text-lg text-foreground">5. Cookies and Tracking</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
                     We use cookies and similar tracking technologies to enhance your experience on our website. You can control cookie settings through your browser preferences.
@@ -132,8 +132,8 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
 
                 <section className="space-y-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full"></div>
-                    <h3 className="font-semibold text-lg">6. Your Rights</h3>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <h3 className="font-semibold text-lg text-foreground">6. Your Rights</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
                     You have the right to:
@@ -147,7 +147,7 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
                       'Lodge a complaint with supervisory authorities'
                     ].map((item, index) => (
                       <li key={index} className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
                         <span className="text-muted-foreground">{item}</span>
                       </li>
                     ))}
@@ -156,8 +156,8 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
 
                 <section className="space-y-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full"></div>
-                    <h3 className="font-semibold text-lg">7. Data Retention</h3>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <h3 className="font-semibold text-lg text-foreground">7. Data Retention</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
                     We retain your personal information for as long as necessary to provide our services and fulfill the purposes outlined in this policy, unless a longer retention period is required by law.
@@ -166,8 +166,8 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
 
                 <section className="space-y-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full"></div>
-                    <h3 className="font-semibold text-lg">8. Changes to This Policy</h3>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <h3 className="font-semibold text-lg text-foreground">8. Changes to This Policy</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
                     We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last Updated" date.
@@ -176,8 +176,8 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
 
                 <section className="space-y-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-violet-500 to-purple-500 rounded-full"></div>
-                    <h3 className="font-semibold text-lg">9. Contact Us</h3>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <h3 className="font-semibold text-lg text-foreground">9. Contact Us</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
                     If you have any questions about this privacy policy, please contact us at:
@@ -195,7 +195,7 @@ const PrivacyPopup: React.FC<PrivacyPopupProps> = ({ isOpen, onClose }) => {
         <div className="flex justify-center mt-6">
           <Button 
             onClick={onClose} 
-            className="px-8 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200 shadow-lg hover:shadow-xl"
+            className="px-8 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold transition-all duration-200 shadow-lg hover:shadow-xl"
           >
             I Understand
           </Button>
