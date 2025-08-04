@@ -7,8 +7,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import AdminMenu from "@/components/AdminMenu";
-import { StagewiseToolbar } from "@stagewise/toolbar-react";
-import ReactPlugin from "@stagewise-plugins/react";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
@@ -44,11 +42,6 @@ const App = () => (
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
-            <StagewiseToolbar
-              config={{
-                plugins: [ReactPlugin],
-              }}
-            />
           </TooltipProvider>
         </AuthProvider>
       </ThemeProvider>

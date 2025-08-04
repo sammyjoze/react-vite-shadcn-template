@@ -60,7 +60,7 @@ const Index: React.FC = () => {
     if (isAuthenticated) {
       navigate('/dashboard');
     } else {
-      setIsAuthOpen(true);
+      setIsSignUpOpen(true);
     }
   };
 
@@ -326,18 +326,18 @@ const Index: React.FC = () => {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                onClick={() => scrollToSection('features')}
-                className="hover:bg-yellow-500 hover:text-black transition-all duration-200"
-              >
-                Features
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="sm" 
                 onClick={() => scrollToSection('demo')}
                 className="hover:bg-yellow-500 hover:text-black transition-all duration-200"
               >
                 Demo
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => scrollToSection('features')}
+                className="hover:bg-yellow-500 hover:text-black transition-all duration-200"
+              >
+                Features
               </Button>
               <Button 
                 variant="ghost" 
@@ -356,9 +356,19 @@ const Index: React.FC = () => {
                   <span className="sm:hidden">Account</span>
                 </Button>
               ) : (
-                <Button variant="outline" onClick={() => setIsAuthOpen(true)} size="sm" className="sm:size-default hover:bg-yellow-500 hover:text-black transition-all duration-200">
-                  Sign In
-                </Button>
+                <>
+                  <Button 
+                    onClick={() => setIsSignUpOpen(true)} 
+                    size="sm" 
+                    className="sm:size-default bg-yellow-500 hover:bg-yellow-400 text-black transition-all duration-200 shadow-lg hover:shadow-xl"
+                  >
+                    <span className="hidden sm:inline">Get Started</span>
+                    <span className="sm:hidden">Get Started</span>
+                  </Button>
+                  <Button variant="outline" onClick={() => setIsAuthOpen(true)} size="sm" className="sm:size-default hover:bg-yellow-500 hover:text-black transition-all duration-200">
+                    Sign In
+                  </Button>
+                </>
               )}
             </div>
           </div>
