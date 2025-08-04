@@ -91,16 +91,16 @@ const SignUpPopup: React.FC<SignUpPopupProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogPortal>
         <DialogPrimitive.Content
-          className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-gray-700 bg-black p-6 shadow-none duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg w-[95vw] max-w-md mx-auto p-0 sm:p-6"
+          className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border-2 border-border bg-background/95 backdrop-blur-sm p-6 shadow-xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-xl w-[95vw] max-w-md mx-auto p-0 sm:p-6"
         >
         <DialogHeader className="px-4 pt-4 sm:px-0 sm:pt-0">
-          <DialogTitle className="text-center text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+          <DialogTitle className="text-center text-xl sm:text-2xl font-bold text-foreground">
             Create Your Account
           </DialogTitle>
         </DialogHeader>
         
-        <Card className="border-0 shadow-none bg-black">
-          <CardContent className="p-4 sm:p-0 bg-black">
+        <Card className="border-0 shadow-none">
+          <CardContent className="p-4 sm:p-0">
             {/* Google Sign Up Button */}
             <Button
               type="button"
@@ -148,7 +148,7 @@ const SignUpPopup: React.FC<SignUpPopupProps> = ({
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Name */}
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-sm font-medium">
+                <Label htmlFor="name" className="text-sm font-semibold text-foreground">
                   Full Name *
                 </Label>
                 <div className="relative group">
@@ -167,7 +167,7 @@ const SignUpPopup: React.FC<SignUpPopupProps> = ({
 
               {/* Username */}
               <div className="space-y-2">
-                <Label htmlFor="username" className="text-sm font-medium">
+                <Label htmlFor="username" className="text-sm font-semibold text-foreground">
                   Username *
                 </Label>
                 <div className="relative group">
@@ -186,7 +186,7 @@ const SignUpPopup: React.FC<SignUpPopupProps> = ({
 
               {/* Email */}
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium">
+                <Label htmlFor="email" className="text-sm font-semibold text-foreground">
                   Email *
                 </Label>
                 <div className="relative group">

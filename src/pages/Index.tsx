@@ -40,9 +40,10 @@ import {
   Grid
 } from 'lucide-react';
 import { STRIPE_PRODUCTS, stripePromise, PlanType } from '@/lib/stripe';
-import { BackgroundBeams } from '@/components/ui/background-beams';
+
 import { WaitlistSection } from '@/components/ui/waitlist';
-import { TestimonialsSectionDemo } from '@/components/ui/testimonials-demo';
+import TestimonialsSection from '@/components/ui/testimonials-section';
+
 import { PricingCard } from '@/components/ui/dark-gradient-pricing';
 
 const Index: React.FC = () => {
@@ -300,7 +301,7 @@ const Index: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background relative">
-      <BackgroundBeams className="opacity-30" />
+      
       {/* Navigation */}
       <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-border/20 border-border/60">
         <div className="container mx-auto px-4 py-3 sm:py-4">
@@ -398,11 +399,51 @@ const Index: React.FC = () => {
             <Button
               size="lg"
               variant="outline"
+              onClick={() => scrollToSection('demo')}
               className="h-12 sm:h-10 hover:bg-yellow-500 hover:text-black transition-all duration-200"
             >
               <Rocket className="mr-2 h-4 w-4" />
               Watch Demo
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* User Reviews Section */}
+      <section className="container mx-auto px-4 py-8 sm:py-12">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8">
+          {/* User Avatars */}
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+              <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+              <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+              <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+              <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+              <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+            </div>
+          </div>
+          
+          {/* Rating Display */}
+          <div className="flex flex-col items-center sm:items-start gap-1">
+            <div className="flex items-center gap-2">
+              <div className="flex gap-1">
+                <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+              </div>
+              <span className="text-white font-semibold text-lg">5.0</span>
+            </div>
+            <p className="text-muted-foreground text-sm">from 200+ reviews</p>
           </div>
         </div>
       </section>
@@ -420,7 +461,7 @@ const Index: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Step 1 */}
-          <div className="text-center relative">
+          <div className="text-center relative bg-gray-900/30 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
             <div className="relative mb-6">
               <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto shadow-lg">
                 <PenTool className="h-10 w-10 text-black" />
@@ -436,7 +477,7 @@ const Index: React.FC = () => {
           </div>
 
           {/* Step 2 */}
-          <div className="text-center relative">
+          <div className="text-center relative bg-gray-900/30 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
             <div className="relative mb-6">
               <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto shadow-lg">
                 <Sparkles className="h-10 w-10 text-black" />
@@ -452,7 +493,7 @@ const Index: React.FC = () => {
           </div>
 
           {/* Step 3 */}
-          <div className="text-center relative">
+          <div className="text-center relative bg-gray-900/30 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
             <div className="relative mb-6">
               <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto shadow-lg">
                 <Download className="h-10 w-10 text-black" />
@@ -471,7 +512,7 @@ const Index: React.FC = () => {
 
       {/* Demo Section */}
       <section id="demo" className="container mx-auto px-4 py-12 sm:py-20">
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-12 sm:mb-16 bg-gray-900/20 backdrop-blur-sm rounded-xl p-8 border border-gray-700/30">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground">
             See It In Action
           </h2>
@@ -480,91 +521,25 @@ const Index: React.FC = () => {
           </p>
         </div>
 
-        <div className="relative max-w-6xl mx-auto">
-          {/* Dashboard Container */}
-          <div className="bg-gray-900 rounded-lg shadow-2xl overflow-hidden border border-gray-700">
-            {/* Dashboard Header */}
-            <div className="bg-gray-800 px-6 py-4 border-b border-gray-700">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-6 h-6 bg-blue-500 rounded"></div>
-                    <span className="text-white font-semibold">supastarter</span>
-                  </div>
-                  <div className="flex items-center space-x-6">
-                    <div className="flex items-center space-x-2 text-blue-400 border-b-2 border-blue-400 pb-2">
-                      <Grid className="h-4 w-4" />
-                      <span className="text-sm font-medium">Dashboard</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-400 hover:text-gray-300 cursor-pointer">
-                      <Sparkles className="h-4 w-4" />
-                      <span className="text-sm">AI Demo</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-400 hover:text-gray-300 cursor-pointer">
-                      <Settings className="h-4 w-4" />
-                      <span className="text-sm">Settings</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
+        <div className="relative max-w-4xl mx-auto">
+          {/* Simple Video Container */}
+          <div className="bg-gray-900/40 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-gray-700/60 aspect-video relative group cursor-pointer hover:bg-gray-900/50 transition-all duration-200">
+            {/* Play Button */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-24 h-24 bg-yellow-500 hover:bg-yellow-400 rounded-full flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-200 group-hover:scale-110">
+                <Play className="h-12 w-12 text-black" />
               </div>
             </div>
-
-            {/* Dashboard Content */}
-            <div className="p-6">
-              {/* Welcome Message */}
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-white mb-1">Welcome Jonathan Wilke!</h3>
-                <p className="text-gray-400 text-sm">See the latest stats of your awesome business.</p>
-              </div>
-
-              {/* Key Metrics */}
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                <div className="bg-gray-800 rounded-lg p-4">
-                  <div className="text-gray-400 text-sm mb-1">New clients</div>
-                  <div className="text-white text-2xl font-bold">344</div>
-                  <div className="text-green-400 text-sm">+12%</div>
-                </div>
-                <div className="bg-gray-800 rounded-lg p-4">
-                  <div className="text-gray-400 text-sm mb-1">Revenue</div>
-                  <div className="text-white text-2xl font-bold">$5,243.00</div>
-                  <div className="text-green-400 text-sm">+60%</div>
-                </div>
-                <div className="bg-gray-800 rounded-lg p-4">
-                  <div className="text-gray-400 text-sm mb-1">Churn</div>
-                  <div className="text-white text-2xl font-bold">3%</div>
-                  <div className="text-red-400 text-sm">-30%</div>
-                </div>
-              </div>
-
-              {/* Video Area */}
-              <div className="bg-gray-800 rounded-lg p-8 flex items-center justify-center min-h-[300px]">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Play className="h-8 w-8 text-gray-400" />
-                  </div>
-                  <p className="text-gray-400 text-lg">Place your content here...</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="bg-gray-800 px-6 py-3 border-t border-gray-700">
-              <div className="flex items-center justify-between text-xs text-gray-400">
-                <span>© 2024 supastarter. All rights reserved.</span>
-                <div className="flex items-center space-x-4">
-                  <span className="hover:text-gray-300 cursor-pointer">Privacy policy</span>
-                  <span className="hover:text-gray-300 cursor-pointer">Terms and conditions</span>
-                </div>
-              </div>
-            </div>
+            
+            {/* Subtle Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
       <section id="features" className="container mx-auto px-4 py-12 sm:py-20">
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-12 sm:mb-16 bg-gray-900/20 backdrop-blur-sm rounded-xl p-8 border border-gray-700/30">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground">
             Why Choose Our Platform?
           </h2>
@@ -598,12 +573,12 @@ const Index: React.FC = () => {
       </section>
 
       {/* Testimonials Section */}
-      <TestimonialsSectionDemo />
+      <TestimonialsSection />
 
       {/* Pricing Section */}
       <section id="pricing" className="relative overflow-hidden bg-background text-foreground">
         <div className="relative z-10 mx-auto max-w-5xl px-4 py-20 md:px-8">
-          <div className="mb-12 space-y-3">
+          <div className="mb-12 space-y-3 bg-gray-900/20 backdrop-blur-sm rounded-xl p-8 border border-gray-700/30">
             <h2 className="text-center text-3xl font-semibold leading-tight sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
               Pricing
             </h2>
@@ -613,23 +588,23 @@ const Index: React.FC = () => {
             </p>
             
             {/* Billing Toggle */}
-            <div className="flex items-center justify-center space-x-4 mt-8">
-              <span className={`text-sm font-medium ${!isYearly ? 'text-foreground' : 'text-muted-foreground'}`}>
-                Monthly
-              </span>
-              <Switch
-                checked={isYearly}
-                onCheckedChange={setIsYearly}
-                className="data-[state=checked]:bg-yellow-500 data-[state=unchecked]:bg-gray-300"
-              />
-              <span className={`text-sm font-medium ${isYearly ? 'text-foreground' : 'text-muted-foreground'}`}>
-                Yearly
-              </span>
-              {isYearly && (
-                <Badge variant="secondary" className="bg-green-500 text-white border-0">
-                  Save 17%
-                </Badge>
-              )}
+            <div className="flex flex-col items-center mt-8">
+              <div className="text-sm text-green-500 font-medium mb-2">
+                2 months free when you pay yearly
+              </div>
+              <div className="flex items-center space-x-4">
+                <span className={`text-sm font-medium ${!isYearly ? 'text-foreground' : 'text-muted-foreground'}`}>
+                  Monthly
+                </span>
+                <Switch
+                  checked={isYearly}
+                  onCheckedChange={setIsYearly}
+                  className="data-[state=checked]:bg-yellow-500 data-[state=unchecked]:bg-gray-300"
+                />
+                <span className={`text-sm font-medium ${isYearly ? 'text-foreground' : 'text-muted-foreground'}`}>
+                  Yearly
+                </span>
+              </div>
             </div>
           </div>
           
@@ -654,8 +629,8 @@ const Index: React.FC = () => {
 
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-12 sm:py-20">
-        <div className="bg-gradient-to-r from-yellow-500/10 via-yellow-500/5 to-yellow-500/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/5 via-transparent to-yellow-500/5 rounded-full blur-3xl"></div>
+        <div className="bg-gradient-to-r from-yellow-500/10 via-yellow-500/5 to-yellow-500/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center relative overflow-hidden bg-gray-900/30 backdrop-blur-sm border border-gray-700/50">
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/5 via-transparent to-yellow-500/5 rounded-full blur-lg"></div>
           <div className="relative">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground">
               Ready to Get Started?

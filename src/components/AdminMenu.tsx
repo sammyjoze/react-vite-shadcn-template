@@ -103,10 +103,10 @@ const AdminMenu: React.FC = () => {
       {/* Main Admin Button */}
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
-          <Button
-            size="sm"
-            className="h-8 w-8 rounded-full bg-yellow-500/80 hover:bg-yellow-400/90 text-black shadow-lg hover:shadow-xl transition-all duration-200 border border-yellow-400/60 backdrop-blur-sm"
-          >
+                        <Button
+                size="sm"
+                className="h-8 w-8 rounded-full bg-yellow-500/80 hover:bg-yellow-400/90 text-black shadow-lg hover:shadow-xl transition-all duration-200 border border-yellow-400/60 backdrop-blur-sm bg-gray-900/40"
+              >
             <Shield className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
