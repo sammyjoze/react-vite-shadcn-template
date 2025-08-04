@@ -14,7 +14,11 @@ interface PricingCardProps {
 
 export function PricingCard({ tier, price, bestFor, CTA, benefits, onButtonClick, isYearly }: PricingCardProps) {
   return (
-    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-background via-background to-muted/20 shadow-lg">
+    <Card className={`relative overflow-hidden border-0 shadow-lg ${
+      tier === "Pro" 
+        ? "bg-gradient-to-br from-yellow-500/10 via-background to-yellow-500/5 border-2 border-yellow-500/30" 
+        : "bg-gradient-to-br from-background via-background to-muted/20"
+    }`}>
       <CardHeader className="pb-8">
         <div className="flex items-center justify-between">
           <div>
@@ -47,8 +51,8 @@ export function PricingCard({ tier, price, bestFor, CTA, benefits, onButtonClick
         <Button 
           className={`w-full transition-all duration-200 hover:scale-105 ${
             tier === "Pro" 
-              ? "bg-yellow-500 hover:bg-yellow-400 text-black shadow-lg hover:shadow-xl" 
-              : "bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300 hover:border-yellow-500/50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+              ? "bg-yellow-500 hover:bg-yellow-400 text-black shadow-lg hover:shadow-xl border-2 border-yellow-400" 
+              : "bg-foreground hover:bg-foreground/90 text-background shadow-lg hover:shadow-xl"
           }`}
           onClick={() => {
             if (onButtonClick) {

@@ -10,11 +10,11 @@ import {
   Brush,
   Camera,
   ChevronDown,
-  Cloud,
   Code,
   Crown,
   Download,
   FileText,
+  Globe,
   Grid,
   Heart,
   Home,
@@ -37,7 +37,6 @@ import {
   TrendingUp,
   Users,
   Video,
-  Wand2,
   Clock,
   Eye,
   Archive,
@@ -52,11 +51,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Textarea } from "@/components/ui/textarea"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { UserDropdown } from "@/components/ui/user-dropdown"
+import { NotificationToggle } from "@/components/ui/notification-toggle"
+import { AnimatedAIChat } from "@/components/ui/animated-ai-chat"
 import { cn } from "@/lib/utils"
 
 // Sample data for apps
@@ -366,67 +372,6 @@ const sidebarItems = [
     icon: <Home />,
     isActive: true,
   },
-  {
-    title: "Apps",
-    icon: <Grid />,
-    badge: "2",
-    items: [
-      { title: "All Apps", url: "#" },
-      { title: "Recent", url: "#" },
-      { title: "Updates", url: "#", badge: "2" },
-      { title: "Installed", url: "#" },
-    ],
-  },
-  {
-    title: "Files",
-    icon: <FileText />,
-    items: [
-      { title: "Recent", url: "#" },
-      { title: "Shared with me", url: "#", badge: "3" },
-      { title: "Favorites", url: "#" },
-      { title: "Trash", url: "#" },
-    ],
-  },
-  {
-    title: "Projects",
-    icon: <Layers />,
-    badge: "4",
-    items: [
-      { title: "Active Projects", url: "#", badge: "4" },
-      { title: "Archived", url: "#" },
-      { title: "Templates", url: "#" },
-    ],
-  },
-  {
-    title: "Learn",
-    icon: <BookOpen />,
-    items: [
-      { title: "Tutorials", url: "#" },
-      { title: "Courses", url: "#" },
-      { title: "Webinars", url: "#" },
-      { title: "Resources", url: "#" },
-    ],
-  },
-  {
-    title: "Community",
-    icon: <Users />,
-    items: [
-      { title: "Explore", url: "#" },
-      { title: "Following", url: "#" },
-      { title: "Challenges", url: "#" },
-      { title: "Events", url: "#" },
-    ],
-  },
-  {
-    title: "Resources",
-    icon: <Bookmark />,
-    items: [
-      { title: "Stock Photos", url: "#" },
-      { title: "Fonts", url: "#" },
-      { title: "Icons", url: "#" },
-      { title: "Templates", url: "#" },
-    ],
-  },
 ]
 
 export function DesignaliCreative() {
@@ -436,12 +381,28 @@ export function DesignaliCreative() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
+  const [theme, setTheme] = useState<"light" | "dark">("dark")
+  const [deactivateOpen, setDeactivateOpen] = useState(false)
 
   // Simulate progress loading
   useEffect(() => {
     const timer = setTimeout(() => setProgress(100), 1000)
     return () => clearTimeout(timer)
   }, [])
+
+  // Initialize theme
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null
+    const initialTheme = savedTheme || "dark"
+    setTheme(initialTheme)
+    document.documentElement.classList.remove("dark", "light")
+    document.documentElement.classList.add(initialTheme)
+  }, [])
+
+  // Save theme to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem("theme", theme)
+  }, [theme])
 
   const toggleExpanded = (title: string) => {
     setExpandedItems((prev) => ({
@@ -450,46 +411,48 @@ export function DesignaliCreative() {
     }))
   }
 
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark"
+    setTheme(newTheme)
+    // Apply theme to document
+    document.documentElement.classList.remove("dark", "light")
+    document.documentElement.classList.add(newTheme)
+    // Save to localStorage
+    localStorage.setItem("theme", newTheme)
+  }
+
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background">
-      {/* Animated gradient background */}
-      <motion.div
-        className="absolute inset-0 -z-10 opacity-20"
-        animate={{
-          background: [
-            "radial-gradient(circle at 50% 50%, rgba(120, 41, 190, 0.5) 0%, rgba(53, 71, 125, 0.5) 50%, rgba(0, 0, 0, 0) 100%)",
-            "radial-gradient(circle at 30% 70%, rgba(233, 30, 99, 0.5) 0%, rgba(81, 45, 168, 0.5) 50%, rgba(0, 0, 0, 0) 100%)",
-            "radial-gradient(circle at 70% 30%, rgba(76, 175, 80, 0.5) 0%, rgba(32, 119, 188, 0.5) 50%, rgba(0, 0, 0, 0) 100%)",
-            "radial-gradient(circle at 50% 50%, rgba(120, 41, 190, 0.5) 0%, rgba(53, 71, 125, 0.5) 50%, rgba(0, 0, 0, 0) 100%)",
-          ],
-        }}
-        transition={{ duration: 30, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-      />
+            <div className="relative min-h-screen overflow-hidden bg-white dark:bg-[#161618] transition-colors duration-300">
+      {/* Modern background with subtle pattern */}
+              <div className="absolute inset-0 -z-10 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 dark:from-[#161618] dark:via-[#161618] dark:to-[#161618]" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.02),transparent_50%)]" />
 
       {/* Mobile menu overlay */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-black/50 md:hidden" onClick={() => setMobileMenuOpen(false)} />
+        <div className="fixed inset-0 z-40 bg-[#191919]/50 md:hidden" onClick={() => setMobileMenuOpen(false)} />
       )}
 
       {/* Sidebar - Mobile */}
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 transform bg-background transition-transform duration-300 ease-in-out md:hidden",
+          "fixed inset-y-0 left-0 z-50 w-64 transform bg-white dark:bg-[#191919] border-r border-[#333333] transition-transform duration-300 ease-in-out md:hidden",
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        <div className="flex h-full flex-col border-r">
-          <div className="flex items-center justify-between p-4">
-            <div className="flex items-center gap-3">
-              <div className="flex aspect-square size-10 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-blue-600 text-white">
-                <Wand2 className="size-5" />
-              </div>
-              <div>
-                <h2 className="font-semibold">Designali</h2>
-                <p className="text-xs text-muted-foreground">Creative Suite</p>
-              </div>
-            </div>
-            <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)}>
+        <div className="flex h-full flex-col">
+                     <div className="flex items-center justify-between p-6">
+             <div className="flex items-center gap-3">
+               <div className="relative">
+                 <div className="p-2 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 shadow-lg">
+                   <Globe className="size-6 text-white" />
+                 </div>
+                 <Sparkles className="absolute -top-1 -right-1 h-3 w-3 text-yellow-500 animate-pulse" />
+               </div>
+               <div>
+                 <h2 className="font-bold text-lg bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">YourApp</h2>
+               </div>
+             </div>
+            <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)} className="rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800">
               <X className="h-5 w-5" />
             </Button>
           </div>
@@ -510,7 +473,14 @@ export function DesignaliCreative() {
                       "flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium",
                       item.isActive ? "bg-primary/10 text-primary" : "hover:bg-muted",
                     )}
-                    onClick={() => item.items && toggleExpanded(item.title)}
+                    onClick={() => {
+                      if (item.items) {
+                        toggleExpanded(item.title)
+                      } else {
+                        // Handle home navigation
+                        setActiveTab("home")
+                      }
+                    }}
                   >
                     <div className="flex items-center gap-3">
                       {item.icon}
@@ -560,18 +530,6 @@ export function DesignaliCreative() {
                 <Settings className="h-5 w-5" />
                 <span>Settings</span>
               </button>
-              <button className="flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
-                <div className="flex items-center gap-3">
-                  <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
-                  <span>John Doe</span>
-                </div>
-                <Badge variant="outline" className="ml-auto">
-                  Pro
-                </Badge>
-              </button>
             </div>
           </div>
         </div>
@@ -580,22 +538,24 @@ export function DesignaliCreative() {
       {/* Sidebar - Desktop */}
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-30 hidden w-64 transform border-r bg-background transition-transform duration-300 ease-in-out md:block",
+          "fixed inset-y-0 left-0 z-30 hidden w-64 transform bg-white dark:bg-[#191919] border-r border-[#333333] transition-transform duration-300 ease-in-out md:block",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
         <div className="flex h-full flex-col">
-          <div className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="flex aspect-square size-10 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-blue-600 text-white">
-                <Wand2 className="size-5" />
-              </div>
-              <div>
-                <h2 className="font-semibold">Designali</h2>
-                <p className="text-xs text-muted-foreground">Creative Suite</p>
-              </div>
-            </div>
-          </div>
+                     <div className="p-6">
+             <div className="flex items-center gap-3">
+               <div className="relative">
+                 <div className="p-2 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 shadow-lg">
+                   <Globe className="size-6 text-white" />
+                 </div>
+                 <Sparkles className="absolute -top-1 -right-1 h-3 w-3 text-yellow-500 animate-pulse" />
+               </div>
+               <div>
+                 <h2 className="font-bold text-lg bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">YourApp</h2>
+               </div>
+             </div>
+           </div>
 
           <div className="px-3 py-2">
             <div className="relative">
@@ -613,7 +573,14 @@ export function DesignaliCreative() {
                       "flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium",
                       item.isActive ? "bg-primary/10 text-primary" : "hover:bg-muted",
                     )}
-                    onClick={() => item.items && toggleExpanded(item.title)}
+                    onClick={() => {
+                      if (item.items) {
+                        toggleExpanded(item.title)
+                      } else {
+                        // Handle home navigation
+                        setActiveTab("home")
+                      }
+                    }}
                   >
                     <div className="flex items-center gap-3">
                       {item.icon}
@@ -663,18 +630,6 @@ export function DesignaliCreative() {
                 <Settings className="h-5 w-5" />
                 <span>Settings</span>
               </button>
-              <button className="flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
-                <div className="flex items-center gap-3">
-                  <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
-                  <span>John Doe</span>
-                </div>
-                <Badge variant="outline" className="ml-auto">
-                  Pro
-                </Badge>
-              </button>
             </div>
           </div>
         </div>
@@ -682,319 +637,144 @@ export function DesignaliCreative() {
 
       {/* Main Content */}
       <div className={cn("min-h-screen transition-all duration-300 ease-in-out", sidebarOpen ? "md:pl-64" : "md:pl-0")}>
-        <header className="sticky top-0 z-10 flex h-16 items-center gap-3 border-b bg-background/95 px-4 backdrop-blur">
-          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileMenuOpen(true)}>
+                 <header className="sticky top-0 z-10 flex h-16 items-center gap-3 bg-white/95 dark:bg-[#191919]/95 backdrop-blur-xl shadow-lg border-b border-gray-200 dark:border-[#333333] px-6">
+          <Button variant="ghost" size="icon" className="md:hidden rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800" onClick={() => setMobileMenuOpen(true)}>
             <Menu className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" size="icon" className="hidden md:flex" onClick={() => setSidebarOpen(!sidebarOpen)}>
+          <Button variant="ghost" size="icon" className="hidden md:flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800" onClick={() => setSidebarOpen(!sidebarOpen)}>
             <PanelLeft className="h-5 w-5" />
           </Button>
           <div className="flex flex-1 items-center justify-between">
-            <h1 className="text-xl font-semibold">Designali Creative</h1>
-            <div className="flex items-center gap-3">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" className="rounded-2xl">
-                      <Cloud className="h-5 w-5" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Cloud Storage</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+                             <h1 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">Dashboard</h1>
+                         <div className="flex items-center gap-4">
+               <NotificationToggle 
+                 notifications={{
+                   unread: notifications,
+                   total: 12,
+                   settings: {
+                     messages: true,
+                     email: true,
+                     push: false,
+                     sound: true
+                   }
+                 }}
+                 onAction={(action) => {
+                   console.log('Notification action:', action);
+                   if (action === 'mark-all-read') {
+                     setNotifications(0);
+                   }
+                 }}
+               />
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" className="rounded-2xl">
-                      <MessageSquare className="h-5 w-5" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Messages</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" className="rounded-2xl relative">
-                      <Bell className="h-5 w-5" />
-                      {notifications > 0 && (
-                        <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-                          {notifications}
-                        </span>
-                      )}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Notifications</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
-              <Avatar className="h-9 w-9 border-2 border-primary">
-                <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User" />
-                <AvatarFallback>JD</AvatarFallback>
-              </Avatar>
-            </div>
+               <UserDropdown 
+                 user={{
+                   name: "John Doe",
+                   username: "@johndoe",
+                   avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
+                   initials: "JD",
+                   status: "online"
+                 }}
+                 onAction={(action) => {
+                   switch (action) {
+                     case "save-profile":
+                       // Handle save profile action
+                       console.log("Profile saved");
+                       break;
+                     case "deactivate":
+                       setDeactivateOpen(true);
+                       break;
+                     case "upgrade":
+                       // Handle upgrade action
+                       console.log("Upgrade clicked");
+                       break;
+                     case "help":
+                       // Handle help action
+                       console.log("Help clicked");
+                       break;
+                     case "logout":
+                       // Handle logout action
+                       console.log("Logout clicked");
+                       break;
+                   }
+                 }}
+               />
+             </div>
           </div>
         </header>
 
-        <main className="flex-1 p-4 md:p-6">
-          <Tabs defaultValue="home" value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <TabsList className="grid w-full max-w-[600px] grid-cols-5 rounded-2xl p-1">
-                <TabsTrigger value="home" className="rounded-xl data-[state=active]:rounded-xl">
-                  Home
-                </TabsTrigger>
-                <TabsTrigger value="apps" className="rounded-xl data-[state=active]:rounded-xl">
-                  Apps
-                </TabsTrigger>
-                <TabsTrigger value="files" className="rounded-xl data-[state=active]:rounded-xl">
-                  Files
-                </TabsTrigger>
-                <TabsTrigger value="projects" className="rounded-xl data-[state=active]:rounded-xl">
-                  Projects
-                </TabsTrigger>
-                <TabsTrigger value="learn" className="rounded-xl data-[state=active]:rounded-xl">
-                  Learn
-                </TabsTrigger>
-              </TabsList>
-              <div className="hidden md:flex gap-2">
-                <Button variant="outline" className="rounded-2xl">
-                  <Download className="mr-2 h-4 w-4" />
-                  Install App
-                </Button>
-                <Button className="rounded-2xl">
-                  <Plus className="mr-2 h-4 w-4" />
-                  New Project
-                </Button>
-              </div>
-            </div>
+                 <main className="flex-1 p-6 md:p-8 bg-white dark:bg-[#161618]">
+                   <div className="max-w-7xl mx-auto">
+                     {/* Welcome Section */}
+                     <div className="mb-8">
+                       <div className="flex items-center justify-between mb-6">
+                         <div>
+                           <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
+                             Welcome back, John!
+                           </h2>
+                         </div>
+                       </div>
+                     </div>
+                     
+                     {/* AI Chat Component */}
+                     <AnimatedAIChat />
+                   </div>
+                 </main>
+       </div>
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-              >
-                <TabsContent value="home" className="space-y-8 mt-0">
-                  <section>
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="overflow-hidden rounded-3xl bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 p-8 text-white"
-                    >
-                      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-                        <div className="space-y-4">
-                          <Badge className="bg-white/20 text-white hover:bg-white/30 rounded-xl">Premium</Badge>
-                          <h2 className="text-3xl font-bold">Welcome to DesignAli Creative Suite</h2>
-                          <p className="max-w-[600px] text-white/80">
-                            Unleash your creativity with our comprehensive suite of professional design tools and
-                            resources.
-                          </p>
-                          <div className="flex flex-wrap gap-3">
-                            <Button className="rounded-2xl bg-white text-indigo-700 hover:bg-white/90">
-                              Explore Plans
-                            </Button>
-                            <Button
-                              variant="outline"
-                              className="rounded-2xl bg-transparent border-white text-white hover:bg-white/10"
-                            >
-                              Take a Tour
-                            </Button>
-                          </div>
-                        </div>
-                        <div className="hidden lg:block">
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 50, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                            className="relative h-40 w-40"
-                          >
-                            <div className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-md" />
-                            <div className="absolute inset-4 rounded-full bg-white/20" />
-                            <div className="absolute inset-8 rounded-full bg-white/30" />
-                            <div className="absolute inset-12 rounded-full bg-white/40" />
-                            <div className="absolute inset-16 rounded-full bg-white/50" />
-                          </motion.div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </section>
 
-                  <section className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-2xl font-semibold">Recent Apps</h2>
-                      <Button variant="ghost" className="rounded-2xl">
-                        View All
-                      </Button>
-                    </div>
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                      {apps
-                        .filter((app) => app.recent)
-                        .map((app) => (
-                          <motion.div key={app.name} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                            <Card className="overflow-hidden rounded-3xl border-2 hover:border-primary/50 transition-all duration-300">
-                              <CardHeader className="pb-2">
-                                <div className="flex items-center justify-between">
-                                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-muted">
-                                    {app.icon}
-                                  </div>
-                                  <Button variant="ghost" size="icon" className="h-8 w-8 rounded-2xl">
-                                    <Star className="h-4 w-4" />
-                                  </Button>
-                                </div>
-                              </CardHeader>
-                              <CardContent className="pb-2">
-                                <CardTitle className="text-lg">{app.name}</CardTitle>
-                                <CardDescription>{app.description}</CardDescription>
-                              </CardContent>
-                              <CardFooter>
-                                <Button variant="secondary" className="w-full rounded-2xl">
-                                  Open
-                                </Button>
-                              </CardFooter>
-                            </Card>
-                          </motion.div>
-                        ))}
-                    </div>
-                  </section>
 
-                  <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                    <section className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-2xl font-semibold">Recent Files</h2>
-                        <Button variant="ghost" className="rounded-2xl">
-                          View All
-                        </Button>
-                      </div>
-                      <div className="rounded-3xl border">
-                        <div className="grid grid-cols-1 divide-y">
-                          {recentFiles.slice(0, 4).map((file) => (
-                            <motion.div
-                              key={file.name}
-                              whileHover={{ backgroundColor: "rgba(0,0,0,0.02)" }}
-                              className="flex items-center justify-between p-4"
-                            >
-                              <div className="flex items-center gap-3">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-muted">
-                                  {file.icon}
-                                </div>
-                                <div>
-                                  <p className="font-medium">{file.name}</p>
-                                  <p className="text-sm text-muted-foreground">
-                                    {file.app} • {file.modified}
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                {file.shared && (
-                                  <Badge variant="outline" className="rounded-xl">
-                                    <Users className="mr-1 h-3 w-3" />
-                                    {file.collaborators}
-                                  </Badge>
-                                )}
-                                <Button variant="ghost" size="sm" className="rounded-xl">
-                                  Open
-                                </Button>
-                              </div>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </div>
-                    </section>
-
-                    <section className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-2xl font-semibold">Active Projects</h2>
-                        <Button variant="ghost" className="rounded-2xl">
-                          View All
-                        </Button>
-                      </div>
-                      <div className="rounded-3xl border">
-                        <div className="grid grid-cols-1 divide-y">
-                          {projects.slice(0, 3).map((project) => (
-                            <motion.div
-                              key={project.name}
-                              whileHover={{ backgroundColor: "rgba(0,0,0,0.02)" }}
-                              className="p-4"
-                            >
-                              <div className="flex items-center justify-between mb-2">
-                                <h3 className="font-medium">{project.name}</h3>
-                                <Badge variant="outline" className="rounded-xl">
-                                  Due {project.dueDate}
-                                </Badge>
-                              </div>
-                              <p className="text-sm text-muted-foreground mb-3">{project.description}</p>
-                              <div className="space-y-2">
-                                <div className="flex items-center justify-between text-sm">
-                                  <span>Progress</span>
-                                  <span>{project.progress}%</span>
-                                </div>
-                                <Progress value={project.progress} className="h-2 rounded-xl" />
-                              </div>
-                              <div className="flex items-center justify-between mt-3 text-sm text-muted-foreground">
-                                <div className="flex items-center">
-                                  <Users className="mr-1 h-4 w-4" />
-                                  {project.members} members
-                                </div>
-                                <div className="flex items-center">
-                                  <FileText className="mr-1 h-4 w-4" />
-                                  {project.files} files
-                                </div>
-                              </div>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-
-                  <section className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-2xl font-semibold">Community Highlights</h2>
-                      <Button variant="ghost" className="rounded-2xl">
-                        Explore
-                      </Button>
-                    </div>
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                      {communityPosts.map((post) => (
-                        <motion.div key={post.title} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="overflow-hidden rounded-3xl">
-                            <div className="aspect-[4/3] overflow-hidden bg-muted">
-                              <img
-                                src={post.image || "/placeholder.svg"}
-                                alt={post.title}
-                                className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-                              />
-                            </div>
-                            <CardContent className="p-4">
-                              <h3 className="font-semibold">{post.title}</h3>
-                              <p className="text-sm text-muted-foreground">by {post.author}</p>
-                              <div className="mt-2 flex items-center justify-between text-sm">
-                                <div className="flex items-center gap-2">
-                                  <Heart className="h-4 w-4 text-red-500" />
-                                  {post.likes}
-                                  <MessageSquare className="ml-2 h-4 w-4 text-blue-500" />
-                                  {post.comments}
-                                </div>
-                                <span className="text-muted-foreground">{post.time}</span>
-                              </div>
-                            </CardContent>
-                          </Card>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </section>
-                </TabsContent>
-
-                {/* Additional tabs content will be added in the next part */}
-              </motion.div>
-            </AnimatePresence>
-          </Tabs>
-        </main>
-      </div>
-    </div>
-  )
-} 
+       {/* Deactivate Account Dialog */}
+       <Dialog open={deactivateOpen} onOpenChange={setDeactivateOpen}>
+         <DialogContent className="sm:max-w-[425px] rounded-2xl bg-white/95 dark:bg-[#191919]/95 backdrop-blur-xl shadow-2xl border border-[#333333]">
+           <DialogHeader className="pb-4">
+             <DialogTitle className="text-xl font-semibold text-gray-900 dark:text-gray-100">Deactivate Account</DialogTitle>
+             <DialogDescription className="text-sm text-gray-600 dark:text-gray-400">
+               This will temporarily deactivate your account. You can reactivate it at any time by logging in.
+             </DialogDescription>
+           </DialogHeader>
+           
+           <div className="space-y-6">
+             <div className="space-y-4">
+               <div className="space-y-2">
+                 <Label htmlFor="confirm-password" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                   Confirm Password
+                 </Label>
+                 <Input 
+                   id="confirm-password" 
+                   type="password" 
+                   className="rounded-lg border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                 />
+               </div>
+               <div className="space-y-2">
+                 <Label htmlFor="reason" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                   Reason (Optional)
+                 </Label>
+                 <Textarea 
+                   id="reason" 
+                   placeholder="Why are you deactivating your account?" 
+                   className="rounded-lg border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 min-h-[80px]"
+                 />
+               </div>
+             </div>
+           </div>
+           
+           <DialogFooter className="pt-6">
+             <Button 
+               variant="outline" 
+               onClick={() => setDeactivateOpen(false)}
+               className="rounded-lg border-gray-200 dark:border-gray-700"
+             >
+               Cancel
+             </Button>
+             <Button 
+               variant="destructive"
+               className="rounded-lg bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700"
+             >
+               Deactivate Account
+             </Button>
+           </DialogFooter>
+         </DialogContent>
+       </Dialog>
+     </div>
+   )
+ } 

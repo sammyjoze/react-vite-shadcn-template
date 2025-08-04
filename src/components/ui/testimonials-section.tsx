@@ -174,25 +174,25 @@ const TestimonialsSection: React.FC = () => {
           {/* Rating */}
           <div className="flex items-center justify-center gap-2 mb-4">
             <Zap className="h-5 w-5 text-yellow-500" />
-            <span className="text-white text-sm font-medium">
+            <span className="text-foreground text-sm font-medium">
               Rated 5 stars by hundreds of users
             </span>
           </div>
           
           {/* Title */}
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             What our users are saying
           </h2>
           
           {/* Subtitle */}
-          <p className="text-lg text-gray-300 mb-6 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
             Join thousands of satisfied customers who've transformed their brand identity
           </p>
           
           {/* CTA */}
           <Button 
             variant="link" 
-            className="text-white hover:text-yellow-500 transition-colors duration-200 p-0 h-auto font-normal"
+            className="text-foreground hover:text-yellow-500 transition-colors duration-200 p-0 h-auto font-normal"
           >
             View all testimonials <ChevronRight className="ml-1 h-4 w-4" />
           </Button>
@@ -213,6 +213,7 @@ const TestimonialsSection: React.FC = () => {
             onClick={handlePrev}
             disabled={currentIndex === 0}
             className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-background/80 hover:bg-background/90 rounded-full w-10 h-10"
+            aria-label="Previous testimonials"
           >
             <ChevronLeft className="h-5 w-5" />
           </Button>
@@ -223,6 +224,7 @@ const TestimonialsSection: React.FC = () => {
             onClick={handleNext}
             disabled={currentIndex >= maxIndex}
             className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-background/80 hover:bg-background/90 rounded-full w-10 h-10"
+            aria-label="Next testimonials"
           >
             <ChevronRight className="h-5 w-5" />
           </Button>
@@ -246,19 +248,19 @@ const TestimonialsSection: React.FC = () => {
             {testimonials.slice(currentIndex, currentIndex + 4).map((testimonial) => (
               <Card 
                 key={testimonial.id} 
-                className="min-w-[320px] max-w-[320px] bg-gray-900/50 border border-gray-700/50 backdrop-blur-sm flex-shrink-0 cursor-grab active:cursor-grabbing"
+                className="min-w-[320px] max-w-[320px] bg-card/50 border border-border/50 backdrop-blur-sm flex-shrink-0 cursor-grab active:cursor-grabbing shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <CardContent className="p-6">
                   {/* Avatar and Info */}
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
-                      <span className="text-white font-semibold text-sm">
+                    <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+                      <span className="text-foreground font-semibold text-sm">
                         {testimonial.avatar}
                       </span>
                     </div>
                     <div>
-                      <h4 className="text-white font-semibold">{testimonial.name}</h4>
-                      <p className="text-gray-400 text-sm">{testimonial.title}</p>
+                      <h4 className="text-foreground font-semibold">{testimonial.name}</h4>
+                      <p className="text-muted-foreground text-sm">{testimonial.title}</p>
                     </div>
                   </div>
 
@@ -270,14 +272,14 @@ const TestimonialsSection: React.FC = () => {
                         className={`h-4 w-4 ${
                           i < testimonial.rating 
                             ? 'text-yellow-500 fill-current' 
-                            : 'text-gray-600'
+                            : 'text-muted-foreground'
                         }`}
                       />
                     ))}
                   </div>
 
                   {/* Quote */}
-                  <p className="text-gray-300 text-sm leading-relaxed">
+                  <p className="text-muted-foreground text-sm leading-relaxed">
                     "{testimonial.quote}"
                   </p>
                 </CardContent>
@@ -294,8 +296,9 @@ const TestimonialsSection: React.FC = () => {
                 className={`w-2 h-2 rounded-full transition-all duration-200 ${
                   i === currentIndex 
                     ? 'bg-yellow-500 w-6' 
-                    : 'bg-gray-600 hover:bg-gray-500'
+                    : 'bg-muted-foreground/50 hover:bg-muted-foreground'
                 }`}
+                aria-label={`Go to testimonial ${i + 1}`}
               />
             ))}
           </div>

@@ -414,20 +414,20 @@ const Index: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8">
           {/* User Avatars */}
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-              <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+            <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-300 flex items-center justify-center">
+              <div className="w-6 h-6 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
             </div>
-            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-              <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+            <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-300 flex items-center justify-center">
+              <div className="w-6 h-6 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
             </div>
-            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-              <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+            <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-300 flex items-center justify-center">
+              <div className="w-6 h-6 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
             </div>
-            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-              <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+            <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-300 flex items-center justify-center">
+              <div className="w-6 h-6 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
             </div>
-            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-              <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+            <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-300 flex items-center justify-center">
+              <div className="w-6 h-6 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
             </div>
           </div>
           
@@ -441,7 +441,7 @@ const Index: React.FC = () => {
                 <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
                 <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
               </div>
-              <span className="text-white font-semibold text-lg">5.0</span>
+              <span className="text-foreground font-semibold text-lg">5.0</span>
             </div>
             <p className="text-muted-foreground text-sm">from 200+ reviews</p>
           </div>
@@ -461,7 +461,7 @@ const Index: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Step 1 */}
-          <div className="text-center relative bg-gray-900/30 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
+          <div className="text-center relative bg-card/50 backdrop-blur-sm rounded-xl p-6 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="relative mb-6">
               <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto shadow-lg">
                 <PenTool className="h-10 w-10 text-black" />
@@ -477,7 +477,7 @@ const Index: React.FC = () => {
           </div>
 
           {/* Step 2 */}
-          <div className="text-center relative bg-gray-900/30 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
+          <div className="text-center relative bg-card/50 backdrop-blur-sm rounded-xl p-6 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="relative mb-6">
               <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto shadow-lg">
                 <Sparkles className="h-10 w-10 text-black" />
@@ -493,7 +493,7 @@ const Index: React.FC = () => {
           </div>
 
           {/* Step 3 */}
-          <div className="text-center relative bg-gray-900/30 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
+          <div className="text-center relative bg-card/50 backdrop-blur-sm rounded-xl p-6 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="relative mb-6">
               <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto shadow-lg">
                 <Download className="h-10 w-10 text-black" />
@@ -512,7 +512,7 @@ const Index: React.FC = () => {
 
       {/* Demo Section */}
       <section id="demo" className="container mx-auto px-4 py-12 sm:py-20">
-        <div className="text-center mb-12 sm:mb-16 bg-gray-900/20 backdrop-blur-sm rounded-xl p-8 border border-gray-700/30">
+        <div className="text-center mb-12 sm:mb-16 bg-card/50 backdrop-blur-sm rounded-xl p-8 border border-border/50 shadow-lg">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground">
             See It In Action
           </h2>
@@ -523,7 +523,7 @@ const Index: React.FC = () => {
 
         <div className="relative max-w-4xl mx-auto">
           {/* Simple Video Container */}
-          <div className="bg-gray-900/40 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-gray-700/60 aspect-video relative group cursor-pointer hover:bg-gray-900/50 transition-all duration-200">
+          <div className="bg-card/50 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-border/50 aspect-video relative group cursor-pointer hover:bg-card/70 transition-all duration-200">
             {/* Play Button */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-24 h-24 bg-yellow-500 hover:bg-yellow-400 rounded-full flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-200 group-hover:scale-110">
@@ -539,7 +539,7 @@ const Index: React.FC = () => {
 
       {/* Features Section */}
       <section id="features" className="container mx-auto px-4 py-12 sm:py-20">
-        <div className="text-center mb-12 sm:mb-16 bg-gray-900/20 backdrop-blur-sm rounded-xl p-8 border border-gray-700/30">
+        <div className="text-center mb-12 sm:mb-16 bg-card/50 backdrop-blur-sm rounded-xl p-8 border border-border/50 shadow-lg">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground">
             Why Choose Our Platform?
           </h2>
@@ -578,7 +578,7 @@ const Index: React.FC = () => {
       {/* Pricing Section */}
       <section id="pricing" className="relative overflow-hidden bg-background text-foreground">
         <div className="relative z-10 mx-auto max-w-5xl px-4 py-20 md:px-8">
-          <div className="mb-12 space-y-3 bg-gray-900/20 backdrop-blur-sm rounded-xl p-8 border border-gray-700/30">
+          <div className="mb-12 space-y-3 bg-card/50 backdrop-blur-sm rounded-xl p-8 border border-border/50 shadow-lg">
             <h2 className="text-center text-3xl font-semibold leading-tight sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
               Pricing
             </h2>
@@ -629,7 +629,7 @@ const Index: React.FC = () => {
 
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-12 sm:py-20">
-        <div className="bg-gradient-to-r from-yellow-500/10 via-yellow-500/5 to-yellow-500/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center relative overflow-hidden bg-gray-900/30 backdrop-blur-sm border border-gray-700/50">
+        <div className="bg-gradient-to-r from-yellow-500/10 via-yellow-500/5 to-yellow-500/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center relative overflow-hidden bg-card/50 backdrop-blur-sm border border-border/50 shadow-lg">
           <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/5 via-transparent to-yellow-500/5 rounded-full blur-lg"></div>
           <div className="relative">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground">

@@ -29,7 +29,6 @@ const App = () => (
       <ThemeProvider>
         <AuthProvider>
           <TooltipProvider>
-            <Toaster />
             <Sonner />
             <BrowserRouter>
               <AdminMenu />

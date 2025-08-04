@@ -181,6 +181,26 @@ const response = await api.get("/users")
 
 ## 🎨 Customization
 
+### Changing the App Color Scheme
+
+To change the entire app's color scheme, simply edit one file:
+
+**File:** `src/lib/colors.ts`
+
+**Change this line:**
+```typescript
+export const BRAND_COLOR = 'yellow' as const;
+```
+
+**To your desired color:**
+```typescript
+export const BRAND_COLOR = 'blue' as const;  // or 'green', 'purple', 'red', etc.
+```
+
+**Available colors:** blue, green, purple, red, orange, pink, indigo, teal, cyan, emerald, violet, fuchsia, rose, amber, lime, sky, slate, gray, zinc, neutral, stone
+
+**Example AI prompt:** "Change the app color from yellow to blue by modifying the BRAND_COLOR constant in src/lib/colors.ts"
+
 ### Themes
 - Modify `src/contexts/ThemeContext.tsx` for theme logic
 - Update `src/index.css` for CSS variables
