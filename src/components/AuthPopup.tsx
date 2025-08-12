@@ -53,8 +53,9 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ isOpen, onClose, onSwitchToSignup
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogPortal>
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" />
         <DialogPrimitive.Content
-          className={`fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 ${getColorClasses('border', 'thick')} bg-background/95 backdrop-blur-sm p-6 shadow-2xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-xl w-[95vw] max-w-md mx-auto p-0 sm:p-6`}
+          className={`fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 ${getColorClasses('border', 'thick')} bg-black backdrop-blur-sm p-6 shadow-2xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-xl w-[95vw] max-w-md mx-auto p-0 sm:p-6`}
         >
         <DialogHeader className="px-4 pt-4 sm:px-0 sm:pt-0">
           <DialogTitle className="text-center text-xl sm:text-2xl font-bold text-foreground">
@@ -62,16 +63,16 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ isOpen, onClose, onSwitchToSignup
           </DialogTitle>
         </DialogHeader>
 
-        <Card className="border-0 shadow-none">
-          <CardContent className="p-4 sm:p-0">
+        <Card className="border-0 shadow-none bg-transparent">
+          <CardContent className="p-4 sm:p-0 bg-transparent">
             {/* Google Sign In Button */}
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full h-11 sm:h-10 mb-4 hover:bg-muted transition-all duration-200"
-              onClick={handleGoogleLogin}
-              disabled={isLoading}
-            >
+                         <Button
+               type="button"
+               variant="outline"
+               className="w-full h-11 sm:h-10 mb-4 hover:bg-black/20 transition-all duration-200"
+               onClick={handleGoogleLogin}
+               disabled={isLoading}
+             >
               {isLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
@@ -115,15 +116,15 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ isOpen, onClose, onSwitchToSignup
                 </Label>
                 <div className="relative group">
                   <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors duration-200" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 h-11 sm:h-10 focus:ring-2 focus:ring-primary/20 transition-all duration-200"
-                    disabled={isLoading}
-                  />
+                                     <Input
+                     id="email"
+                     type="email"
+                     placeholder="Enter your email"
+                     value={email}
+                     onChange={(e) => setEmail(e.target.value)}
+                     className="pl-10 h-11 sm:h-10 bg-black border-border focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                     disabled={isLoading}
+                   />
                 </div>
               </div>
 
@@ -133,15 +134,15 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ isOpen, onClose, onSwitchToSignup
                 </Label>
                 <div className="relative group">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors duration-200" />
-                  <Input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 pr-10 h-11 sm:h-10 focus:ring-2 focus:ring-primary/20 transition-all duration-200"
-                    disabled={isLoading}
-                  />
+                                     <Input
+                     id="password"
+                     type={showPassword ? 'text' : 'password'}
+                     placeholder="Enter your password"
+                     value={password}
+                     onChange={(e) => setPassword(e.target.value)}
+                     className="pl-10 pr-10 h-11 sm:h-10 bg-black border-border focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                     disabled={isLoading}
+                   />
                   <Button
                     type="button"
                     variant="ghost"
