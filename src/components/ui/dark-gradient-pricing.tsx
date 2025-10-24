@@ -1,6 +1,7 @@
 import { Check, X } from "lucide-react"
 import { Button } from "./button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card"
+import { getColorClasses } from "@/lib/colors"
 
 interface PricingCardProps {
   tier: string
@@ -52,7 +53,7 @@ export function PricingCard({ tier, price, bestFor, CTA, benefits, onButtonClick
           className={`w-full transition-all duration-200 hover:scale-105 ${
             tier === "Pro" 
               ? "bg-yellow-500 hover:bg-yellow-400 text-black shadow-lg hover:shadow-xl border-2 border-yellow-400" 
-              : "bg-foreground hover:bg-foreground/90 text-background shadow-lg hover:shadow-xl"
+              : "bg-gray-700 hover:bg-gray-600 text-gray-100 shadow-lg hover:shadow-xl"
           }`}
           onClick={() => {
             if (onButtonClick) {

@@ -122,9 +122,6 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         {props.onChange && (
           <div 
             className="absolute bottom-2 right-2 opacity-0 w-2 h-2 bg-violet-500 rounded-full"
-            style={{
-              animation: 'none',
-            }}
             id="textarea-ripple"
           />
         )}
@@ -280,7 +277,7 @@ export function AnimatedAIChat() {
     };
 
     return (
-        <div className="flex flex-col w-full items-center justify-start bg-transparent text-white pt-16 pb-6 px-6 relative">
+        <div className="flex flex-col w-full items-center justify-start bg-transparent text-foreground pt-16 pb-6 px-6 relative transition-all duration-500 ease-out">
             <div className="w-full max-w-2xl mx-auto relative">
                 <motion.div 
                     className="relative z-10 space-y-12"
@@ -295,18 +292,18 @@ export function AnimatedAIChat() {
                             transition={{ delay: 0.2, duration: 0.5 }}
                             className="inline-block"
                         >
-                            <h1 className="text-3xl font-medium tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white/90 to-white/40 pb-1">
+                            <h1 className="text-3xl font-medium tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground/90 to-foreground/40 pb-1">
                                 How can I help today?
                             </h1>
                             <motion.div 
-                                className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                                className="h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent"
                                 initial={{ width: 0, opacity: 0 }}
                                 animate={{ width: "100%", opacity: 1 }}
                                 transition={{ delay: 0.5, duration: 0.8 }}
                             />
                         </motion.div>
                         <motion.p 
-                            className="text-sm text-white/40"
+                            className="text-sm text-muted-foreground"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.3 }}
@@ -316,7 +313,7 @@ export function AnimatedAIChat() {
                     </div>
 
                     <motion.div 
-                        className="relative backdrop-blur-2xl bg-white/[0.02] rounded-2xl border border-white/[0.05] shadow-2xl"
+                        className="relative backdrop-blur-2xl bg-card/50 rounded-2xl border border-border shadow-2xl transition-all duration-500 ease-out"
                         initial={{ scale: 0.98 }}
                         animate={{ scale: 1 }}
                         transition={{ delay: 0.1 }}
@@ -325,32 +322,32 @@ export function AnimatedAIChat() {
                             {showCommandPalette && (
                                 <motion.div 
                                     ref={commandPaletteRef}
-                                    className="absolute left-4 right-4 bottom-full mb-2 backdrop-blur-xl bg-black/90 rounded-lg z-50 shadow-lg border border-white/10 overflow-hidden"
+                                    className="absolute left-4 right-4 bottom-full mb-2 backdrop-blur-xl bg-card/95 rounded-lg z-50 shadow-lg border border-border overflow-hidden"
                                     initial={{ opacity: 0, y: 5 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 5 }}
                                     transition={{ duration: 0.15 }}
                                 >
-                                    <div className="py-1 bg-black/95">
+                                    <div className="py-1 bg-card/95">
                                         {commandSuggestions.map((suggestion, index) => (
                                             <motion.div
                                                 key={suggestion.prefix}
                                                 className={cn(
                                                     "flex items-center gap-2 px-3 py-2 text-xs transition-colors cursor-pointer",
                                                     activeSuggestion === index 
-                                                        ? "bg-white/10 text-white" 
-                                                        : "text-white/70 hover:bg-white/5"
+                                                        ? "bg-accent text-accent-foreground" 
+                                                        : "text-muted-foreground hover:bg-muted"
                                                 )}
                                                 onClick={() => selectCommandSuggestion(index)}
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
                                                 transition={{ delay: index * 0.03 }}
                                             >
-                                                <div className="w-5 h-5 flex items-center justify-center text-white/60">
+                                                <div className="w-5 h-5 flex items-center justify-center text-muted-foreground">
                                                     {suggestion.icon}
                                                 </div>
                                                 <div className="font-medium">{suggestion.label}</div>
-                                                <div className="text-white/40 text-xs ml-1">
+                                                <div className="text-muted-foreground/60 text-xs ml-1">
                                                     {suggestion.prefix}
                                                 </div>
                                             </motion.div>
@@ -378,9 +375,9 @@ export function AnimatedAIChat() {
                                     "resize-none",
                                     "bg-transparent",
                                     "border-none",
-                                    "text-white/90 text-sm",
+                                    "text-foreground text-sm",
                                     "focus:outline-none",
-                                    "placeholder:text-white/20",
+                                    "placeholder:text-muted-foreground",
                                     "min-h-[60px]"
                                 )}
                                 style={{
@@ -401,7 +398,7 @@ export function AnimatedAIChat() {
                                     {attachments.map((file, index) => (
                                         <motion.div
                                             key={index}
-                                            className="flex items-center gap-2 text-xs bg-white/[0.03] py-1.5 px-3 rounded-lg text-white/70"
+                                            className="flex items-center gap-2 text-xs bg-muted/50 py-1.5 px-3 rounded-lg text-muted-foreground"
                                             initial={{ opacity: 0, scale: 0.9 }}
                                             animate={{ opacity: 1, scale: 1 }}
                                             exit={{ opacity: 0, scale: 0.9 }}
@@ -409,7 +406,8 @@ export function AnimatedAIChat() {
                                             <span>{file}</span>
                                             <button 
                                                 onClick={() => removeAttachment(index)}
-                                                className="text-white/40 hover:text-white transition-colors"
+                                                className="text-muted-foreground hover:text-foreground transition-colors"
+                                                title="Remove attachment"
                                             >
                                                 <XIcon className="w-3 h-3" />
                                             </button>
@@ -419,17 +417,17 @@ export function AnimatedAIChat() {
                             )}
                         </AnimatePresence>
 
-                        <div className="p-4 border-t border-white/[0.05] flex items-center justify-between gap-4">
+                        <div className="p-4 border-t border-border flex items-center justify-between gap-4">
                             <div className="flex items-center gap-3">
                                 <motion.button
                                     type="button"
                                     onClick={handleAttachFile}
                                     whileTap={{ scale: 0.94 }}
-                                    className="p-2 text-white/40 hover:text-white/90 rounded-lg transition-colors relative group"
+                                    className="p-2 text-muted-foreground hover:text-foreground rounded-lg transition-colors relative group"
                                 >
                                     <Paperclip className="w-4 h-4" />
                                     <motion.span
-                                        className="absolute inset-0 bg-white/[0.05] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                                        className="absolute inset-0 bg-muted/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
                                         layoutId="button-highlight"
                                     />
                                 </motion.button>
@@ -442,13 +440,13 @@ export function AnimatedAIChat() {
                                     }}
                                     whileTap={{ scale: 0.94 }}
                                     className={cn(
-                                        "p-2 text-white/40 hover:text-white/90 rounded-lg transition-colors relative group",
-                                        showCommandPalette && "bg-white/10 text-white/90"
+                                        "p-2 text-muted-foreground hover:text-foreground rounded-lg transition-colors relative group",
+                                        showCommandPalette && "bg-accent text-accent-foreground"
                                     )}
                                 >
                                     <Command className="w-4 h-4" />
                                     <motion.span
-                                        className="absolute inset-0 bg-white/[0.05] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                                        className="absolute inset-0 bg-muted/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
                                         layoutId="button-highlight"
                                     />
                                 </motion.button>
@@ -464,8 +462,8 @@ export function AnimatedAIChat() {
                                     "px-4 py-2 rounded-lg text-sm font-medium transition-all",
                                     "flex items-center gap-2",
                                     value.trim()
-                                        ? "bg-white text-[#0A0A0B] shadow-lg shadow-white/10"
-                                        : "bg-white/[0.05] text-white/40"
+                                        ? "bg-primary text-primary-foreground shadow-lg"
+                                        : "bg-muted text-muted-foreground"
                                 )}
                             >
                                 {isTyping ? (
@@ -483,7 +481,7 @@ export function AnimatedAIChat() {
                             <motion.button
                                 key={suggestion.prefix}
                                 onClick={() => selectCommandSuggestion(index)}
-                                className="flex items-center gap-2 px-3 py-2 bg-white/[0.02] hover:bg-white/[0.05] rounded-lg text-sm text-white/60 hover:text-white/90 transition-all relative group"
+                                className="flex items-center gap-2 px-3 py-2 bg-muted/50 hover:bg-muted rounded-lg text-sm text-muted-foreground hover:text-foreground transition-all relative group"
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
@@ -491,7 +489,7 @@ export function AnimatedAIChat() {
                                 {suggestion.icon}
                                 <span>{suggestion.label}</span>
                                 <motion.div
-                                    className="absolute inset-0 border border-white/[0.05] rounded-lg"
+                                    className="absolute inset-0 border border-border rounded-lg"
                                     initial={false}
                                     animate={{
                                         opacity: [0, 1],
@@ -511,16 +509,16 @@ export function AnimatedAIChat() {
             <AnimatePresence>
                 {isTyping && (
                     <motion.div 
-                        className="fixed bottom-8 mx-auto transform -translate-x-1/2 backdrop-blur-2xl bg-white/[0.02] rounded-full px-4 py-2 shadow-lg border border-white/[0.05]"
+                        className="fixed bottom-8 mx-auto transform -translate-x-1/2 backdrop-blur-2xl bg-card/50 rounded-full px-4 py-2 shadow-lg border border-border"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 20 }}
                     >
                         <div className="flex items-center gap-3">
-                            <div className="w-8 h-7 rounded-full bg-white/[0.05] flex items-center justify-center text-center">
-                                <span className="text-xs font-medium text-white/90 mb-0.5">zap</span>
+                            <div className="w-8 h-7 rounded-full bg-muted flex items-center justify-center text-center">
+                                <span className="text-xs font-medium text-foreground mb-0.5">zap</span>
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-white/70">
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                 <span>Thinking</span>
                                 <TypingDots />
                             </div>
@@ -540,7 +538,7 @@ function TypingDots() {
             {[1, 2, 3].map((dot) => (
                 <motion.div
                     key={dot}
-                    className="w-1.5 h-1.5 bg-white/90 rounded-full mx-0.5"
+                    className="w-1.5 h-1.5 bg-foreground rounded-full mx-0.5"
                     initial={{ opacity: 0.3 }}
                     animate={{ 
                         opacity: [0.3, 0.9, 0.3],
@@ -553,7 +551,7 @@ function TypingDots() {
                         ease: "easeInOut",
                     }}
                     style={{
-                        boxShadow: "0 0 4px rgba(255, 255, 255, 0.3)"
+                        boxShadow: "0 0 4px hsl(var(--foreground) / 0.3)"
                     }}
                 />
             ))}
@@ -576,7 +574,7 @@ function ActionButton({ icon, label }: ActionButtonProps) {
             whileTap={{ scale: 0.97 }}
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
-            className="flex items-center gap-2 px-4 py-2 bg-neutral-900 hover:bg-neutral-800 rounded-full border border-neutral-800 text-neutral-400 hover:text-white transition-all relative overflow-hidden group"
+            className="flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 rounded-full border border-border text-muted-foreground hover:text-foreground transition-all relative overflow-hidden group"
         >
             <div className="relative z-10 flex items-center gap-2">
                 {icon}

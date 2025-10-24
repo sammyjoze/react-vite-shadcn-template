@@ -35,14 +35,36 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   useEffect(() => {
     const root = window.document.documentElement;
     
+    // Add transition overlay for smooth effect
+    const overlay = document.createElement('div');
+    overlay.className = 'theme-transition-overlay';
+    document.body.appendChild(overlay);
+    
+    // Trigger overlay animation
+    setTimeout(() => {
+      overlay.classList.add('active');
+    }, 10);
+    
     // Remove both classes first to ensure clean state
     root.classList.remove('light', 'dark');
     
     // Add the current theme class
     root.classList.add(theme);
     
+    // Add transition animation to body
+    root.classList.add('animate-theme-transition');
+    
     // Save to localStorage
     localStorage.setItem('theme', theme);
+    
+    // Clean up overlay and animation class
+    setTimeout(() => {
+      overlay.classList.remove('active');
+      root.classList.remove('animate-theme-transition');
+      setTimeout(() => {
+        document.body.removeChild(overlay);
+      }, 200);
+    }, 300);
   }, [theme]);
 
   // Initialize theme on mount to prevent flash

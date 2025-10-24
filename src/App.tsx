@@ -10,9 +10,16 @@ import AdminMenu from "@/components/AdminMenu";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
+import Settings from "./pages/Settings";
+import Projects from "./pages/Projects";
+import Analytics from "./pages/Analytics";
+import Team from "./pages/Team";
+import Messages from "./pages/Messages";
+import Files from "./pages/Files";
 // import Pricing from "./pages/Pricing"; // Removed
 import PricingNew from "./pages/PricingNew";
 import NotFound from "./pages/NotFound";
+import { PersistentLayout } from "./components/PersistentLayout";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,9 +41,47 @@ const App = () => (
               <AdminMenu />
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/admin" element={<Admin />} />
                 <Route path="/pricing" element={<PricingNew />} />
+                <Route path="/dashboard" element={
+                  <PersistentLayout>
+                    <Dashboard />
+                  </PersistentLayout>
+                } />
+                <Route path="/admin" element={
+                  <PersistentLayout>
+                    <Admin />
+                  </PersistentLayout>
+                } />
+                <Route path="/settings" element={
+                  <PersistentLayout>
+                    <Settings />
+                  </PersistentLayout>
+                } />
+                <Route path="/projects" element={
+                  <PersistentLayout>
+                    <Projects />
+                  </PersistentLayout>
+                } />
+                <Route path="/analytics" element={
+                  <PersistentLayout>
+                    <Analytics />
+                  </PersistentLayout>
+                } />
+                <Route path="/team" element={
+                  <PersistentLayout>
+                    <Team />
+                  </PersistentLayout>
+                } />
+                <Route path="/messages" element={
+                  <PersistentLayout>
+                    <Messages />
+                  </PersistentLayout>
+                } />
+                <Route path="/files" element={
+                  <PersistentLayout>
+                    <Files />
+                  </PersistentLayout>
+                } />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
