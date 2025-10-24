@@ -1,6 +1,6 @@
-# React Vite Shadcn UI Boilerplate
+# ViteForge 🔥
 
-A modern, production-ready React boilerplate with Vite, TypeScript, Tailwind CSS, and Shadcn UI components.
+A powerful, modern React boilerplate that forges exceptional applications with Vite, TypeScript, Tailwind CSS, and shadcn/ui components.
 
 ## ✨ Features
 
@@ -11,6 +11,8 @@ A modern, production-ready React boilerplate with Vite, TypeScript, Tailwind CSS
 - **Loading States** - Skeleton components and loading spinners
 - **Toast Notifications** - User feedback system
 - **Error Boundaries** - Global error handling
+- **Persistent Sidebar** - Collapsible navigation with tooltips
+- **Tabbed Settings** - Organized settings interface
 
 ### 🔐 **Authentication**
 - **User Context** - Complete authentication state management

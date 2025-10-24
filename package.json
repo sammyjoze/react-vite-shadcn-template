@@ -1,7 +1,8 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "viteforge",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A powerful React boilerplate with Vite, TypeScript, Tailwind CSS, and shadcn/ui components",
   "type": "module",
   "scripts": {
     "dev": "vite",
