@@ -123,7 +123,7 @@ export function PersistentLayout({ children }: PersistentLayoutProps) {
                   <Sparkles className="absolute -top-1 -right-1 h-3 w-3 text-yellow-500 animate-pulse" />
                 </div>
                 <div>
-                  <h2 className="font-bold text-lg text-foreground">ViteForge</h2>
+                  <h2 className="font-bold text-lg text-foreground">YourApp</h2>
                 </div>
               </div>
               <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)} className="rounded-xl hover:bg-muted">
@@ -202,7 +202,7 @@ export function PersistentLayout({ children }: PersistentLayoutProps) {
                   <Sparkles className="absolute -top-1 -right-1 h-3 w-3 text-yellow-500 animate-pulse" />
                 </div>
                 <div className={cn("transition-all duration-500 ease-out overflow-hidden", sidebarOpen ? "opacity-100 w-auto" : "opacity-0 w-0")}>
-                  <h2 className="font-bold text-lg text-foreground whitespace-nowrap">ViteForge</h2>
+                  <h2 className="font-bold text-lg text-foreground whitespace-nowrap">YourApp</h2>
                 </div>
               </div>
             </div>
@@ -297,7 +297,7 @@ export function PersistentLayout({ children }: PersistentLayoutProps) {
                  location.pathname === '/team' ? 'Team' :
                  location.pathname === '/messages' ? 'Messages' :
                  location.pathname === '/files' ? 'Files' :
-                 'ViteForge'}
+                 'YourApp'}
               </h1>
               <div className="flex items-center gap-4">
                 <ThemeToggle />
